@@ -30,3 +30,7 @@ end
   Notice.create!(title: title,
                description: description)
 end
+
+
+Problem.create!(question_style:2)
+Problem.create!(question_style:1)

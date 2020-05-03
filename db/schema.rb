@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200503092128) do
+ActiveRecord::Schema.define(version: 20200503111307) do
 
   create_table "notices", force: :cascade do |t|
     t.string "title"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "problems", force: :cascade do |t|
+    t.integer "question_style"
+    t.date "released_on"
+    t.boolean "released", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
