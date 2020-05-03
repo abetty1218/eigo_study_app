@@ -1,0 +1,23 @@
+// Place all the styles related to the notices controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.notice_border{
+  border-bottom: 0.5px dotted gray;
+  &:first-child{
+    border-top: 0.5px dotted gray;
+  }
+}
+
+.notice-index{
+  list-style:none;
+}
+
+.top-notice{
+  position:relative;
+}
+
+.notice-link{
+  position:absolute;
+  top:0;
+  right:0;
+}

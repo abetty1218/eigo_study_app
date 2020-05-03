@@ -1,0 +1,24 @@
+<% provide(:title, 'お知らせ一覧') %>
+<div class="mt-3">
+  <h1 class="text-center">お知らせ一覧</h1>
+  <%= will_paginate @notices, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  <% if admin_logged_in? %>
+    <%= link_to "新規登録", new_notice_path, class: 'btn btn-primary mt-2' %>
+  <% end %>
+
+  <ul class="notice-index mt-4">
+    <% @notices.each do |notice|%>
+      <li class="pt-2 pb-4 notice_border">
+        <div><%= l(notice.created_at, format: :long) %></div>
+        <div class="mt-1"><%= notice.title %></div>
+        <div class="mt-1"><%= notice.description %></div>
+        <% if admin_logged_in? %>
+          <div class="mt-3">
+            <%= link_to "編集", edit_notice_path(notice), class: 'btn btn-primary' %>
+            <%= link_to "削除", notice_path(notice) , method: :delete, class: 'btn btn-danger',data: { confirm: "#{notice.title}さんを消去してもいいですか？" } %>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

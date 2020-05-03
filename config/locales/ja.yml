@@ -16,6 +16,11 @@ ja:
         check: お知らせメールの受け取り
         created_at: 作成日
         updated_at: 更新日
+      notice:
+        title: タイトル
+        description: 詳細
+        created_at: 作成日
+        updated_at: 更新日
   date:
     abbr_day_names:
     - 日

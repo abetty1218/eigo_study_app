@@ -15,8 +15,18 @@
 </div>
 <div class="mt-5 top-notice">
   <h2 class="text-center">お知らせ（最新５件）</h2>
-  <%= link_to "お知らせ一覧へ", "#", class: 'btn btn-success notice-link' %>
-
+  <%= link_to "お知らせ一覧へ", notices_path, class: 'btn btn-success notice-link' %>
+  <ul>
+    <% @notices.each do |notice|%>
+      <li class="d-flex pt-3 pb-3 notice_border">
+        <div><%= l(notice.created_at, format: :long) %></div>
+        <div class="ml-3"><%= notice.title %></div>
+        <% if notice.created_at > Date.current.ago(3.days) %>
+          <div class="bg-primary text-white pl-3 pr-3 ml-3 shiny-btn1 rounded">最新!!</div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>
 <div class="mt-5">
   <h2 class="text-center">英単語アプリの特徴!!</h2>
