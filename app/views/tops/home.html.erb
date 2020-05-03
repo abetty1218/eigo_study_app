@@ -1,0 +1,56 @@
+
+<div class="text-center jumbotron site_title_layout">
+<h1 class="site_title">英単語学習アプリ</h1>
+<% if !logged_in? %>
+  <div>
+    <%= link_to "ログイン", login_path, class: "btn btn-primary account_btn" %>
+    <%= link_to "アカウント作成", new_user_path,class:"btn btn-success account_btn" %>
+  </div>
+<% end %>
+</div>
+<div>
+<div class="col-md-10 offset-1 site_heading text-center pt-4 pb-4 rounded">
+  <h2>英単語学習アプリとは？</h2>
+  <p id="information-content">簡単な英単語の学習アプリです。!!</p>
+</div>
+<div class="mt-5 top-notice">
+  <h2 class="text-center">お知らせ（最新５件）</h2>
+  <%= link_to "お知らせ一覧へ", "#", class: 'btn btn-success notice-link' %>
+
+</div>
+<div class="mt-5">
+  <h2 class="text-center">英単語アプリの特徴!!</h2>
+  <p class="text-success">図をクリックすると拡大図が表示されます。</p>
+  <div class="card mt-1">
+    <div class="card-header">
+      <h3>クイズ形式で英単語の問題を出題</h3>
+    </div>
+    <div class="card-body d-flex">
+    　<div class="col-md-6">検索欄に場所を入力すれば、ホテル名、住所、価格、ホームページへのリンクを一覧表示し、最寄りのホテルを検索することができます。</div>
+      <div class="col-md-6">
+        <img src="assets/eigo.jpg" class="sample" width="100%" class="mb-3" data-toggle="modal" data-target="#picture" data-id="assets/eigo.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="card mt-3">
+    <div class="card-header">
+      <h3>学習記録を管理</h3>
+    </div>
+    <div class="card-body d-flex">
+      <div class="col-md-6">
+        <img src="assets/eigo.jpg" class="sample" width="100%" class="mb-3" data-toggle="modal" data-target="#picture" data-id="assets/eigo.jpg">
+      </div>
+      <div class="col-md-6">泊まったホテルの特徴や感想等をメモとして記録しておくことができます。後で、前に泊まったホテルの名前なんだっけ？とならないように泊まった
+                      ホテルの特徴をお気に入り一覧として、残しておくことができます。
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%= render :partial => "picture" %>
+<script>
+  $('.sample').click(function() {
+  var picture = $(this).data("id");
+    $('.modal-body').children('img').attr('src', picture);
+  });
+</script>

@@ -9,7 +9,6 @@ RSpec.feature "Edit", type: :feature do
     click_button "ログイン"
   end
 
-  # ユーザーは編集に成功する
   scenario "successful edit" do
     click_link "アカウント編集"
     visit edit_user_path(@user)
@@ -22,7 +21,6 @@ RSpec.feature "Edit", type: :feature do
     expect(@user.reload.email).to eq "edit@example.com"
   end
 
-  # ユーザーは編集に失敗する
   scenario "unsuccessful edit" do
 
     click_link "アカウント編集"
