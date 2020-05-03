@@ -1,6 +1,5 @@
 require 'rails_helper'
 describe UsersController do
-#
   describe 'Get #edit' do
     context "when no user login" do
       before do

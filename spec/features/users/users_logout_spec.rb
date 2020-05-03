@@ -5,7 +5,7 @@ RSpec.feature "Login", type: :feature do
     visit new_user_path
     fill_in "名前", with: "Example User"
     fill_in "メールアドレス", with: "user@example.com"
-    find("input[name='user[check]'][value='male']").set(true)
+    find("input[name='user[check]'][value='mail']").set(true)
     fill_in "パスワード", with: "password"
     fill_in "パスワード再確認", with: "password"
     click_button '作成'
