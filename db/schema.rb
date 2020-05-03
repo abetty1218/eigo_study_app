@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200503111307) do
+ActiveRecord::Schema.define(version: 20200503115641) do
 
   create_table "notices", force: :cascade do |t|
     t.string "title"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20200503111307) do
     t.boolean "released", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "number"
+    t.index ["number"], name: "index_problems_on_number", unique: true
   end
 
   create_table "users", force: :cascade do |t|

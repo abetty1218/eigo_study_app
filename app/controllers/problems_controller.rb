@@ -24,12 +24,19 @@ class ProblemsController < ApplicationController
       @count = @problems.count
       render 'index'
     end
-
   end
+
 
   def destroy
     @problem = Problem.find(params[:id])
+    @problem = Problem.find(params[:id])
+    number = @problem.number
     if @problem.destroy
+      @problems = Problem.where("number > ?", number)
+      @problems.each do |problem|
+        problem.number = problem.number - 1
+        problem.save
+      end
       flash[:success] = "問題を削除しました。"
       redirect_to problems_url
     end

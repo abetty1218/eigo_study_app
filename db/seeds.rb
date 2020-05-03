@@ -32,5 +32,7 @@ end
 end
 
 
-Problem.create!(question_style:2)
-Problem.create!(question_style:1)
+Problem.create!(question_style:2,number:1)
+Problem.create!(question_style:1,number:2)
+Problem.create!(question_style:1,number:3)
+Problem.create!(question_style:1,number:4)
