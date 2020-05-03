@@ -1,0 +1,19 @@
+require 'rails_helper'
+
+RSpec.feature "UsersLogin", type: :feature do
+  before do
+    @user = create(:user)
+  end
+
+  scenario "login change menu bar" do
+    visit login_path
+
+    fill_in "メールアドレス", with: @user.email
+    fill_in "パスワード", with: @user.password
+    click_button "ログイン"
+
+    expect(page).to_not have_css("a", text: "ログイン")
+    expect(page).to have_css("a", text: "ログアウト")
+    expect(page).to have_css("a", text: "アカウント編集")
+  end
+end

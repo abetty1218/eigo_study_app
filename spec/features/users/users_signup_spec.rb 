@@ -1,0 +1,49 @@
+require 'rails_helper'
+
+RSpec.feature "UsersSignups", type: :feature do
+
+  feature "valid signup information" do
+    before do
+      visit new_user_path
+      fill_in "名前", with: "Example User"
+      fill_in "メールアドレス", with: "user@example.com"
+      find("input[name='user[check]'][value='male']").set(true)
+      fill_in "パスワード", with: "password"
+      fill_in "パスワード再確認", with: "password"
+    end
+
+    scenario "add users count" do
+      expect { click_button '作成' }.to change { User.all.size }.by(1)
+    end
+
+    scenario "show flash message" do
+      click_button "作成"
+      visit root_path
+      expect(page).to have_content "英単語学習アプリ"
+      expect(page).to_not have_content "アカウント作成"
+      expect(page).to_not have_css("a", text: "ログイン")
+    end
+
+  feature "invalid signup information" do
+    before do
+      visit new_user_path
+      fill_in "名前", with: ""
+      fill_in "メールアドレス", with: "user@invalid"
+      find("input[name='user[check]'][value='male']").set(true)
+      fill_in "パスワード", with: "foo"
+      fill_in "パスワード再確認", with: "bar"
+    end
+
+    scenario "no difference users count" do
+      expect { click_button '作成' }.to_not change { User.all.size }
+    end
+
+    scenario "is show error messages" do
+      click_button "作成"
+      expect(page).to have_content "名前を入力してください"
+      expect(page).to have_content "メールアドレスは不正な値です"
+      expect(page).to have_content "パスワードは6文字以上で入力してください"
+      expect(page).to have_content "パスワード再確認とパスワードの入力が一致しません"
+    end
+  end
+end

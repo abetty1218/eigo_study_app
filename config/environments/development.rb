@@ -4,6 +4,9 @@ Rails.application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
+
+  config.middleware.use RackSessionAccess::Middleware  # 追加
+
   config.cache_classes = false
 
   # Do not eager load code on boot.
@@ -44,6 +47,11 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }# それぞれの環境のhost名
+  config.action_mailer.delivery_method = :smtp
+
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
