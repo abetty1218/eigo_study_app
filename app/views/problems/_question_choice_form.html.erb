@@ -1,0 +1,25 @@
+<%= f.hidden_field :question_style, value: @question_style %>
+<%= f.hidden_field :number, value: @count + 1 %>
+<%= f.fields_for :questions do |ff| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="form-group">
+    <%= ff.label :content %>
+    <%= ff.text_field :content, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :answer,"解答" %>
+    <% @question_choices.each do |question_choice| %>
+      <%= ff.fields_for "question_choices[]",question_choice do |fff| %>
+        <div class="form-check">
+          <%= fff.radio_button :choice, true, class: "choice", :checked => false %>
+          <%= fff.text_field :content, class: "w-75" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= ff.label :description %>
+    <%= ff.text_area :description, class: 'form-control' %>
+  </div>
+<% end %>
+<%= f.submit yield(:button_text), class: "btn btn-primary mt-1" %>

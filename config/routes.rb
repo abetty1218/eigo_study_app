@@ -3,6 +3,12 @@ Rails.application.routes.draw do
 resources :users
 resources :notices
 resources :problems do
+  resources :questions do
+    collection do
+      patch :update_all
+      get :edit_all
+    end
+  end
 
   member do
     patch :released

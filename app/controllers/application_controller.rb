@@ -52,11 +52,9 @@ class ApplicationController < ActionController::Base
     else
       count = 1
     end
-    number = 0
     4.times{
       count = count + 1
-      number = number + 1
-      @question_choices << QuestionChoice.new(id: count, number: number)
+      @question_choices << QuestionChoice.new(id: count)
     }
   end
 end

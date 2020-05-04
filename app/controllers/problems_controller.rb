@@ -1,11 +1,45 @@
 class ProblemsController < ApplicationController
 
+  def new
+    @problem = Problem.new
+    @problem.questions.build
+    @question_style = params[:question_style]
+    @count = Problem.all.count
+    set_question_choice
+  end
+
+  def create
+    @problem = Problem.new(problem_params)
+    @question_style = problem_params[:question_style]
+    if @question_style == "1"
+      choice_params = params["problem"]["questions_attributes"]["0"]["question_choices"]
+    end
+    @count = Problem.all.count
+    if @problem.save
+      question = Question.last
+      if choice_params
+        choice_params.keys.each do |id|
+          choice = QuestionChoice.new
+          choice.number = choice_params[id]["number"]
+          choice.content = choice_params[id]["content"]
+          choice.choice = choice_params[id]["choice"]
+          choice.question_id = question.id
+          choice.save
+        end
+      end
+      flash[:success] = "問題を作成しました。"
+      redirect_to problems_url
+    else
+      set_question_choice
+      render 'new'
+    end
+  end
+
   def index
     @problems = Problem.all
     @problem = Problem.new
     @count = @problems.count
   end
-
 
   def released
     @problem = Problem.find(params[:id])
@@ -26,7 +60,6 @@ class ProblemsController < ApplicationController
     end
   end
 
-
   def destroy
     @problem = Problem.find(params[:id])
     @problem = Problem.find(params[:id])
@@ -41,4 +74,9 @@ class ProblemsController < ApplicationController
       redirect_to problems_url
     end
   end
+
+  private
+    def problem_params
+      params.require(:problem).permit(:question_style,:number, questions_attributes:[:id,:content,:answer,:description])
+    end
 end

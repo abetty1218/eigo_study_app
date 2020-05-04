@@ -10,7 +10,7 @@
       <tr>
         <td class="text-center"><%= problem.number %></td>
         <td class="text-center"><%= problem.released_on %></td>
-        <td class="text-center"><%= link_to "質問一覧", "#" %></td>
+        <td class="text-center"><%= link_to "質問一覧",problem_questions_path(problem) %></td>
         <td class="text-center">
           <% if problem.released == true %>
           　<%= link_to "非公開", released_problem_path(problem), method: :patch, class: 'btn btn-success',data: { confirm: "問題を非公開にしてもいいですか？" } %>
