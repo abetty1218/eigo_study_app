@@ -1,0 +1,17 @@
+<%= form_for(@question, url:problem_questions_path(@problem)) do |f| %>
+  <%= f.hidden_field :problem_id, value: @problem.id %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_field :content, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :answer %>
+    <%= f.text_field :answer, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <%= f.submit yield(:button_text), class: "btn btn-primary mt-1" %>
+<% end %>

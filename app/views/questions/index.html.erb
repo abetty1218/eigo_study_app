@@ -14,11 +14,6 @@
       <th class="text-center">削除</th>
     </tr>
   　<% @questions.each do |question| %>
-      <% question.question_choices.each_with_index do |choice, id| %>
-         <% if choice.choice == true %>
-           <% answer = id + 1 %>
-         <% end %>
-      <% end %>
       <tr>
         <td class="text-center"><%= question.content %></td>
         <td class="text-center">

@@ -1,0 +1,24 @@
+<%= form_for(@question, url:problem_questions_path(@problem)) do |f| %>
+  <%= f.hidden_field :problem_id, value: @problem.id %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_field :content, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :answer %>
+    <% @question_choices.each do |question_choice| %>
+      <%= f.fields_for "question_choices[]",question_choice do |ff| %>
+        <div class="form-check">
+          <%= ff.radio_button :choice, true, class: "choice", :checked => false, data:{number:question_choice.number} %>
+          <%= ff.text_field :content, class: "w-75" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <%= f.submit yield(:button_text), class: "btn btn-primary mt-1" %>
+<% end %>
