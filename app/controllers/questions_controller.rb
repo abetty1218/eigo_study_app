@@ -58,6 +58,26 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def answer
+    @try = params[:try].to_i
+    @problem = Problem.find(params[:problem_id])
+    @question = Question.find(params[:id])
+    @question_answer = QuestionAnswer.new
+    @question_count = @problem.questions.count
+    @answer  = current_user.question_answers.where(problem_id: params[:problem_id]).where(try: @try).where(question_id: params[:id]).first
+    
+    @answer_count = current_user.question_answers.where(problem_id: params[:problem_id]).where(try: @try).count
+  end
+
+  def show
+    @question = Question.find(params[:id])
+  end
+
+  def answer_index
+    @problem = Problem.find(params[:problem_id])
+    @questions = @problem.questions
+  end
+
   def destroy
     question = Question.find(params[:id])
     if question.destroy

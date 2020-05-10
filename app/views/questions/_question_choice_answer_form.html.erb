@@ -1,0 +1,20 @@
+<%= f.hidden_field :user_id, value: current_user.id %>
+<%= f.hidden_field :question_id, value: @question.id %>
+<%= f.hidden_field :problem_id, value: @problem.id %>
+<%= f.hidden_field :try, value: @try %>
+<% number = 1 %>
+<%= @question.answer %>
+<% @question.question_choices.each do |choice| %>
+  <div class="form-check">
+    <%= f.radio_button :answer, number, class: "choice", :checked => false %>
+    <label class="form-check-label" for="defaultCheck1">
+      <%= choice.content %>
+    </label>
+  </div>
+  <% number = number + 1 %>
+<% end %>
+<% if QuestionAnswer.where(question_id: @question.id).where(try: @try).present? %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary mt-2",:disabled=>true %>
+<% else %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary mt-2" %>
+<% end %>

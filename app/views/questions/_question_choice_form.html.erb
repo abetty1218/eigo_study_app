@@ -10,7 +10,7 @@
     <% @question_choices.each do |question_choice| %>
       <%= f.fields_for "question_choices[]",question_choice do |ff| %>
         <div class="form-check">
-          <%= ff.radio_button :choice, true, class: "choice", :checked => false, data:{number:question_choice.number} %>
+          <%= ff.radio_button :choice, true, class: "choice", :checked => false %>
           <%= ff.text_field :content, class: "w-75" %>
         </div>
       <% end %>

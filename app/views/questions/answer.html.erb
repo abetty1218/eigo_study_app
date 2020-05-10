@@ -1,0 +1,44 @@
+<% provide(:title, '質問') %>
+<% provide(:button_text, '回答する') %>
+<div class="mt-3">
+  <h1 class="text-center">質問</h1>
+  <div class="question_title">下記の日本語を英語に訳しなさい。</div>
+  <div class="question_content mt-3">Q.<%= @question.content %>
+  <div class="mt-3 row">
+    <div class="col-6">
+      <% if @problem.question_style == 2 %>
+        <%= form_with(model:@question_answer, url:questions_answers_path,local:true) do |f| %>
+          <%= render 'question_answer_form',f: f %>
+        <% end %>
+      <% else %>
+        <%= form_with(model:@question_answer, url:questions_answers_path,local:true) do |f| %>
+          <%= render 'question_choice_answer_form',f: f %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <% if @answer.present? && @answer.correct == true %>
+        <div class= "text-success ml-5 mt-4 correct-font">正解<span class="ml-2 figure-font">○</span></div>
+      <% elsif @answer.present? && @answer.correct == false %>
+        <div class= "text-danger ml-5 mt-4 correct-font">不正解<span class="ml-2 figure-font">×</span></div>
+      <% end %>
+    </div>
+    <% if @answer.present? %>
+      <div class="w-100 ml-3 mt-4">
+        <button type = "button" class="btn btn-primary d-block description-button">解説をみる</button>
+      <div class="description mt-2"><%= @question.description %></div>
+    </div>
+    <% end %>
+    <% if @answer_count == @question_count %>
+      <%= link_to "回答結果", complete_problem_path(@problem), class: "btn btn-success col-md-4 offset-4 mt-5" %>
+    <% elsif @answer %>
+      <%= link_to "次の質問へ", answer_problem_question_path(@problem,params[:id].to_i+1,retry:@retry), class: "btn btn-success col-md-4 offset-4 mt-5" %>
+    <% end %>
+  </div>
+</div>
+<script>
+  $('.description').hide();
+  $(".description-button").click(function(){
+    $('.description').toggle();
+  });
+</script>

@@ -4,7 +4,12 @@ resources :users
 resources :notices
 resources :problems do
   resources :questions do
+    member do
+      get :answer
+    end
     collection do
+      patch :create
+      get :answer_index
       patch :update_all
       get :edit_all
     end
@@ -12,10 +17,10 @@ resources :problems do
 
   member do
     patch :released
+    get :complete
   end
-
 end
-
+resources :questions_answers
 root 'tops#home'
 get    '/login',   to: 'sessions#new'
 post   '/login',   to: 'sessions#create'

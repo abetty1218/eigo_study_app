@@ -1,0 +1,44 @@
+<% provide(:title, '質問回答一覧') %>
+<div class="mt-3">
+  <h1 class="text-center">質問回答一覧</h1>
+  <table class="table-bordered table-striped col-md-12">
+    <tr>
+      <th class="text-center">問題</th>
+      <th class="text-center">回答</th>
+      <th class="text-center">解答</th>
+      <th class="text-center">回答結果</th>
+      <th class="text-center">詳細</th>
+    </tr>
+  　<% @questions.each do |question| %>
+      <tr>
+        <td class="text-center"><%= question.content %></td>
+        <td class="text-center">
+          <% if current_user.question_answers.find_by(question_id: question.id).present? %>
+            <%= current_user.question_answers.find_by(question_id: question.id).answer %>
+          <% end %>
+        </td>
+        <td class="text-center">
+          <% if @problem.question_style == 2 %>
+            <%= answer = question.answer %>
+          <% else %>
+            <% question.question_choices.each_with_index do |choice, id| %>
+              <% if choice.choice == true %>
+                <%= answer = (id + 1).to_s %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </td>
+        <td class="text-center">
+          <% if current_user.question_answers.find_by(question_id: question.id).present? %>
+          　<% if current_user.question_answers.find_by(question_id: question.id).correct == true %>
+             正解
+          　<% elsif current_user.question_answers.find_by(question_id: question.id).correct == false %>
+             不正解
+            <% end %>
+          <% end %>
+        </td>
+        <td class="text-center"><%= link_to "詳細", problem_question_path(@problem,question), class: 'btn btn-primary' %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

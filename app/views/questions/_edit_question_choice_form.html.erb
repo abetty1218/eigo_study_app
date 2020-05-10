@@ -11,9 +11,9 @@
       <%= f.fields_for "question_choices[]",question_choice do |ff| %>
         <div class="form-check">
           <% if question_choice.choice == true %>
-            <%= ff.radio_button :choice, true, class: "choice", :checked => true, data:{number:question_choice.number} %>
+            <%= ff.radio_button :choice, true, class: "choice", :checked => true %>
           <% else %>
-            <%= ff.radio_button :choice, true, class: "choice", :checked => false, data:{number:question_choice.number} %>
+            <%= ff.radio_button :choice, true, class: "choice", :checked => false %>
           <% end %>
           <%= ff.text_field :content, class: "w-75" %>
         </div>

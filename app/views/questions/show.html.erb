@@ -1,0 +1,16 @@
+<% provide(:title, '質問詳細') %>
+<div class="mt-3">
+  <h1 class="text-center">質問詳細</h1>
+  <div class="answer_show">
+    <div>質問</div>
+    <div><%= @question.content %>
+  </div>
+  <div class="answer_show mt-5">
+    <div>解答</div>
+    <div><%= @question.answer %>
+  </div>
+  <div class="answer_show mt-5">
+    <div>解説</div>
+    <div><%= @question.description %>
+  </div>
+</div>

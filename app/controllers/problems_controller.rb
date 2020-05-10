@@ -41,6 +41,11 @@ class ProblemsController < ApplicationController
     @count = @problems.count
   end
 
+  def answer_index
+    @problem = Problem.find(params[:problem_id])
+    @questions = @problem.questions
+  end
+
   def released
     @problem = Problem.find(params[:id])
     if @problem.released == true
@@ -58,6 +63,13 @@ class ProblemsController < ApplicationController
       @count = @problems.count
       render 'index'
     end
+  end
+
+  def complete
+    @try = params[:try]
+    @problem = Problem.find(params[:id])
+    @correct_count = current_user.question_answers.where(problem_id: params[:id]).where(correct: true).where(try: @try).count
+    @question_count = @problem.questions.count
   end
 
   def destroy

@@ -1,1 +1,52 @@
-
+<table class="table-bordered table-striped col-md-12">
+  <tr>
+    <th class="text-center">No</th>
+    <th class="text-center">公開日</th>
+    <th class="text-center">問題</th>
+    <th class="text-center w-25">正答率</th>
+    <th class="text-center">質問回答一覧</th>
+  </tr>
+　<% @problems.each do |problem| %>
+    <% if problem.released == true %>
+      <%# ユーザーの問題ごとの全解答　%>
+      <% problem_answer = current_user.question_answers.where(problem_id: problem.id) %>
+      <%# ユーザーの問題ごとの１回目の解答　%>
+      <% first_answer = problem_answer.where(try: 0) %>
+      <%# ユーザーの現在の再チャレンジの回数　%>
+      <% last_try = problem_answer.pluck(:try).last %>
+      <%# 現在挑戦している問題の回答結果　%>
+      <% current_answer = problem_answer.where(try: last_try) %>
+      <%# 現在挑戦している質問の番号　%>
+      <% if current_answer.count == problem.questions.count %>
+        <% question_count = problem.questions.first.id %>
+      <% else %>
+        <% question_count = problem.questions.first.id + current_answer.count %>
+      <% end %>
+      <tr>
+        <td class="text-center"><%= problem.number %></td>
+        <td class="text-center"><%= problem.released_on %></td>
+        <td class="text-center">
+          <%= link_to get_name(problem,first_answer), answer_problem_question_path(problem,Question.find(question_count),try: get_try(problem_answer,problem,current_answer,first_answer)) %>
+        </td>
+        <td class="text-center">
+          <% correct_count = problem_answer.where(try: get_correct_count_try(last_try,current_answer,problem)).where(correct: true).count %>
+          <% if first_answer.count ==  problem.questions.count %>
+            <div class="d-flex">
+              <div class="progress mt-2 w-75 mx-auto mb-2 d-flex" style="height: 25px;">
+                <div class="progress-bar bg-success progress-bar-striped active prog progress-bar-animated"
+                    role="progressbar" aria-valuenow="<%= get_correct_rate(problem,correct_count) %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= get_correct_rate(problem,correct_count) %>%">
+                </div>
+              </div>
+              <div class="mr-1 pt-2"><%= correct_count %>/<%= problem.questions.count %></div>
+            </div>
+          <% end %>
+        </td>
+        <td class="text-center">
+          <% if first_answer.count ==  problem.questions.count %>
+            <%= link_to "質問回答一覧", answer_index_problem_questions_path(problem) %>
+          <% end %>
+      　</td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

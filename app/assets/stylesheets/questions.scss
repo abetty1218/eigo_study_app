@@ -1,3 +1,33 @@
 // Place all the styles related to the questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.question_title{
+  font-size:25px;
+}
+
+.question_content{
+  font-size:22px;
+}
+
+.answer-font{
+  font-size:25px !important;
+}
+
+.correct-font{
+  font-size:50px
+}
+
+.figure-font{
+  font-size:80px
+}
+
+.description{
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding-left:5px;
+  min-height:100px;
+}
+
+.answer_show{
+  font-size:25px;
+}

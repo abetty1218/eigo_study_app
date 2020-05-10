@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200503124230) do
+ActiveRecord::Schema.define(version: 20200509083450) do
 
   create_table "notices", force: :cascade do |t|
     t.string "title"
@@ -29,10 +29,23 @@ ActiveRecord::Schema.define(version: 20200503124230) do
     t.index ["number"], name: "index_problems_on_number", unique: true
   end
 
+  create_table "question_answers", force: :cascade do |t|
+    t.string "answer"
+    t.boolean "correct", default: false
+    t.integer "try", default: 0
+    t.integer "user_id", null: false
+    t.integer "question_id", null: false
+    t.integer "problem_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["problem_id"], name: "index_question_answers_on_problem_id"
+    t.index ["question_id"], name: "index_question_answers_on_question_id"
+    t.index ["user_id"], name: "index_question_answers_on_user_id"
+  end
+
   create_table "question_choices", force: :cascade do |t|
     t.boolean "choice", default: false
     t.string "content"
-    t.integer "number"
     t.integer "question_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
