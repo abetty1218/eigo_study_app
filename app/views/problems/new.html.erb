@@ -1,20 +1,52 @@
 <% provide(:title, "質問作成") %>
 <% provide(:button_text, '作成') %>
 <div class="mt-3 mb-5">
-  <h1 class="text-center">質問作成</h1>
-  <% if @question_style == "2" %>
-    <%= form_for(@problem) do |f| %>
-      <%= render 'question_form',f: f %>
-    <% end %>
-  <% else %>
-    <%= form_for(@problem) do |f| %>
-      <%= render 'question_choice_form',f: f %>
-    <% end %>
+<h1 class="text-center">質問作成</h1>
+<% if @question_style == "2" %>
+  <%= nested_form_for(@problem) do |f| %>
+    <%= render 'question_form',f: f %>
   <% end %>
+<% else %>
+  <%= nested_form_for(@problem) do |f| %>
+    <%= render 'question_choice_form',f: f %>
+  <% end %>
+<% end %>
 </div>
 <script>
-  $(".choice").click(function(){
-    $('.choice:checked').prop('checked', false);
-    $(this).prop('checked', true);
+$(document).on('click','input[type="radio"]',function(){
+  $(this).parents(".fields").find('input[type="radio"]').prop('checked', false);
+  $(this).prop('checked', true);
+});
+
+$(document).on('click','.add_question_btn',function(){
+  $(this).prev(".fields").addClass('mt-3');
+});
+
+let choice_count = {};
+$('.submit-btn').on("click",function(e){
+  $(".container").children(".mt-3").children(".new_problem").children(".fields:visible").each(function(index, element){
+    each_count = $(element).find('.fields:visible').find('.choice:checked').length;
+    if(each_count == 0){
+      choice_count[index+1] = each_count;
+    }
   });
+
+  $(".question_add").children(".fields:visible").each(function(index, element){
+    length = Object.keys(choice_count).length
+    each_count = $(element).find('.choice:checked').length;
+    if(each_count == 0){
+      choice_count[length+1] = each_count;
+    }
+  });
+
+  if(Object.keys(choice_count).length > 0){
+    alert_statement = []
+    $.each(choice_count,function(index, element){
+      alert_statement.push(index + '番目の質問の解答となる選択肢にチェックがはいっていません。');
+    });
+    statement = alert_statement.join("\n");
+    alert(statement);
+  }
+});
+
 </script>

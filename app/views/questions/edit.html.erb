@@ -1,18 +1,20 @@
 <% provide(:title, "質問編集") %>
 <% provide(:button_text, '更新') %>
-<h1 class="text-center">質問編集</h1>
-<% if @problem.question_style == 2 %>
-  <%= form_for(@question, url:problem_question_path(@problem)) do |f| %>
-    <%= render 'question_form' %>
+<div class="mt-3">
+  <h1 class="text-center">質問編集</h1>
+  <% if @problem.question_style == 2 %>
+    <%= form_for(@question, url:problem_question_path(@problem,@question)) do |f| %>
+      <%= render 'edit_question_form',f: f %>
+    <% end %>
+  <% else %>
+    <%= nested_form_for(@question, url:problem_question_path(@problem,@question)) do |f| %>
+      <%= render 'edit_question_choice_form',f: f %>
+    <% end %>
   <% end %>
-<% else %>
-  <%= form_for(@question, url:problem_question_path(@problem)) do |f| %>
-    <%= render 'edit_question_choice_form' %>
-  <% end %>
-<% end %>
+</div>
 <script>
-  $(".choice").click(function(){
-    $('.choice:checked').prop('checked', false);
+  $(document).on('click','input[type="radio"]',function(){
+    $('input[type="radio"]').prop('checked', false);
     $(this).prop('checked', true);
   });
 </script>

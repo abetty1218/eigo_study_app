@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :logged_in_admin, only: [:index,:create,:destroy,:new,:edit,:update,:edit_all,:update_all]
+  before_action :logged_in_user, only: [:answer_index,:answer,:show]
 
   def index
     @problem = Problem.find(params[:problem_id])
@@ -8,27 +10,20 @@ class QuestionsController < ApplicationController
   def new
     @problem = Problem.find(params[:problem_id])
     @question = @problem.questions.build
-    set_question_choice
+    @count = @problem.questions.count
   end
 
   def create
-    @question = Question.new(question_params)
-    @problem = Problem.find(params[:problem_id])
-    if @question.save
-      if choice_params
-        choice_params.keys.each do |id|
-          choice = QuestionChoice.new(choice_params[id])
-          choice.question_id = @question.id
-          choice.save
-        end
-      end
-      flash[:success] = "質問を作成しました。"
-      redirect_to problem_questions_url
-    else
-      set_question_choice
-      render 'new'
-    end
-  end
+     @problem = Problem.find(params[:problem_id])
+     @count = @problem.questions.count
+     if @problem.update_attributes(problem_params)
+       flash[:success] = "質問を作成しました。"
+       redirect_to problem_questions_url
+     else
+       render 'new'
+     end
+
+   end
 
   def edit
     @question = Question.find(params[:id])
@@ -36,25 +31,50 @@ class QuestionsController < ApplicationController
     @question_choices = @question.question_choices
   end
 
+  def edit_all
+    @problem = Problem.find(params[:problem_id])
+  end
+
   def update
     @question = Question.find(params[:id])
-    first_choice = @question.question_choices.find_by(choice: true);
-    if @question.update_attributes(question_params)
-      if choice_params.present?
-        choice_params.keys.each do |id|
-          choice = QuestionChoice.find(id)
-          choice.update_attributes(choice_params[id])
-        end
-        update_choice = @question.question_choices.where.not(id: first_choice.id).where(choice: true).first
-        if !update_choice.nil? && !first_choice.nil?
-          first_choice.choice = false
-          first_choice.save
+    @problem = Problem.find(params[:problem_id])
+    choice = @question.question_choices.find_by(choice: true);
+    if @question.update_attributes(question_update_params)
+      if question_update_params["question_choices_attributes"].present?
+        update_choice = @question.question_choices.where.not(id: choice.id).where(choice: true).first
+        if !update_choice.nil? && !choice.nil?
+          choice.choice = false
+          choice.save
         end
       end
       flash[:success] = "質問を編集しました。"
       redirect_to problem_questions_url
     else
+      @question_choices = @question.question_choices
       render "edit"
+    end
+  end
+
+  def update_all
+    @problem = Problem.find(params[:problem_id])
+    ids = @problem.questions.ids
+    choices = QuestionChoice.where(question_id: ids).where(choice: true);
+    if @problem.update_attributes(problem_params)
+      problem_params["questions_attributes"].keys.each do |id|
+        if problem_params["questions_attributes"][id]["question_choices_attributes"].present? && problem_params["questions_attributes"][id]["_destroy"] == "false"
+          question_id = problem_params["questions_attributes"][id]["id"]
+          choice = choices.where(question_id: question_id).first
+          update_choice = QuestionChoice.where.not(id: choice.id).where(question_id: question_id).where(choice: true).first
+            if !update_choice.nil? && !choice.nil?
+              choice.choice = false
+              choice.save
+            end
+        end
+      end
+      flash[:success] = "質問を編集しました。"
+      redirect_to problem_questions_url
+    else
+      render 'edit_all'
     end
   end
 
@@ -65,7 +85,6 @@ class QuestionsController < ApplicationController
     @question_answer = QuestionAnswer.new
     @question_count = @problem.questions.count
     @answer  = current_user.question_answers.where(problem_id: params[:problem_id]).where(try: @try).where(question_id: params[:id]).first
-    
     @answer_count = current_user.question_answers.where(problem_id: params[:problem_id]).where(try: @try).count
   end
 
@@ -87,11 +106,15 @@ class QuestionsController < ApplicationController
   end
 
   private
-    def question_params
-      params.require(:question).permit(:content, :answer, :description, :problem_id)
+    def question_update_params
+      params.require(:question).permit(:id, :content, :answer, :description, question_choices_attributes: [:id, :choice,:content,:_destroy])
     end
 
-    def choice_params
-      params.require(:question).permit(question_choices: [:choice,:content])[:question_choices]
+    def problem_params
+      params.require(:problem).permit(:id,
+        questions_attributes: [:id, :content, :answer, :description,:_destroy,
+          question_choices_attributes: [:id, :choice, :content, :_destroy]
+        ]
+      )
     end
 end

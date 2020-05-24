@@ -1,25 +1,43 @@
 <%= f.hidden_field :question_style, value: @question_style %>
-<%= f.hidden_field :number, value: @count + 1 %>
+<%= f.hidden_field :number, value: @count+1 %>
 <%= f.fields_for :questions do |ff| %>
-  <%= render 'shared/error_messages', object: f.object %>
   <div class="form-group">
     <%= ff.label :content %>
     <%= ff.text_field :content, class: 'form-control' %>
+    <% if ff.object.errors.include?(:content) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:content).first %>
+    <% end %>
   </div>
   <div class="form-group">
-    <%= f.label :answer,"解答" %>
-    <% @question_choices.each do |question_choice| %>
-      <%= ff.fields_for "question_choices[]",question_choice do |fff| %>
-        <div class="form-check">
-          <%= fff.radio_button :choice, true, class: "choice", :checked => false %>
-          <%= fff.text_field :content, class: "w-75" %>
+    <%= ff.label :answer %>
+    <%= ff.hidden_field :answer, class: 'form-control' %>
+    <%= ff.fields_for :question_choices do |fff| %>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><%= fff.radio_button :choice, true, class:"choice" %></span>
         </div>
+        <%= fff.text_field :content, class: "w-75" %>
+        <div class="input-group-append">
+          <span class="input-group-text" id="basic-addon2"><%= fff.link_to_remove "選択肢削除" %></span>
+        </div>
+      </div>
+      <% if fff.object.errors.include?(:content) %>
+        <p style="color: red;"><%= fff.object.errors.full_messages_for(:content).first %>
       <% end %>
     <% end %>
+    <%= ff.link_to_add "選択肢追加", :question_choices, class:"add_choice_btn" %>
   </div>
   <div class="form-group">
     <%= ff.label :description %>
     <%= ff.text_area :description, class: 'form-control' %>
+    <% if ff.object.errors.include?(:description) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:description).first %>
+    <% end %>
   </div>
+  <%= ff.link_to_remove "質問削除" %>
+  <hr size="5" color="black">
 <% end %>
-<%= f.submit yield(:button_text), class: "btn btn-primary mt-1" %>
+<div class="question_add">
+  <%= f.link_to_add "質問追加", :questions, class:"add_question_btn" %>
+</div>
+<%= f.submit yield(:button_text), class: "btn btn-primary mt-1 submit-btn" %>

@@ -1,6 +1,5 @@
 class QuestionsAnswersController < ApplicationController
-
-  before_action :logged_in, only: [:create]
+　before_action :logged_in_user, only: [:create]
 
   def create
     @question_answer = QuestionAnswer.new(answer_params)

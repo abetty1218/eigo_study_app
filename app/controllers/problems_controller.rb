@@ -1,4 +1,7 @@
 class ProblemsController < ApplicationController
+  before_action :logged_in, only: [:index]
+  before_action :logged_in_user, only: [:complete]
+  before_action :logged_in_admin, only: [:create,:destroy,:new,:released]
 
   def new
     @problem = Problem.new
@@ -11,26 +14,11 @@ class ProblemsController < ApplicationController
   def create
     @problem = Problem.new(problem_params)
     @question_style = problem_params[:question_style]
-    if @question_style == "1"
-      choice_params = params["problem"]["questions_attributes"]["0"]["question_choices"]
-    end
     @count = Problem.all.count
     if @problem.save
-      question = Question.last
-      if choice_params
-        choice_params.keys.each do |id|
-          choice = QuestionChoice.new
-          choice.number = choice_params[id]["number"]
-          choice.content = choice_params[id]["content"]
-          choice.choice = choice_params[id]["choice"]
-          choice.question_id = question.id
-          choice.save
-        end
-      end
       flash[:success] = "問題を作成しました。"
       redirect_to problems_url
     else
-      set_question_choice
       render 'new'
     end
   end
@@ -39,11 +27,6 @@ class ProblemsController < ApplicationController
     @problems = Problem.all
     @problem = Problem.new
     @count = @problems.count
-  end
-
-  def answer_index
-    @problem = Problem.find(params[:problem_id])
-    @questions = @problem.questions
   end
 
   def released
@@ -74,7 +57,6 @@ class ProblemsController < ApplicationController
 
   def destroy
     @problem = Problem.find(params[:id])
-    @problem = Problem.find(params[:id])
     number = @problem.number
     if @problem.destroy
       @problems = Problem.where("number > ?", number)
@@ -89,6 +71,10 @@ class ProblemsController < ApplicationController
 
   private
     def problem_params
-      params.require(:problem).permit(:question_style,:number, questions_attributes:[:id,:content,:answer,:description])
+       params.require(:problem).permit(:id,:question_style,:number,
+         questions_attributes: [:id, :content, :answer, :description,:_destroy,
+           question_choices_attributes: [:id, :choice, :content, :_destroy]
+         ]
+       )
     end
 end

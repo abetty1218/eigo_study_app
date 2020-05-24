@@ -1,3 +1,10 @@
 #logo{
   font-size:20px
 }
+
+.field_with_errors {
+  display: contents;
+  input {
+    @extend .is-invalid !optional;
+  }
+}

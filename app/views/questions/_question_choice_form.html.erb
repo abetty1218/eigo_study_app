@@ -1,24 +1,40 @@
-<%= form_for(@question, url:problem_questions_path(@problem)) do |f| %>
-  <%= f.hidden_field :problem_id, value: @problem.id %>
-  <%= render 'shared/error_messages', object: f.object %>
+<%= f.fields_for :questions do |ff| %>
   <div class="form-group">
-    <%= f.label :content %>
-    <%= f.text_field :content, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :answer %>
-    <% @question_choices.each do |question_choice| %>
-      <%= f.fields_for "question_choices[]",question_choice do |ff| %>
-        <div class="form-check">
-          <%= ff.radio_button :choice, true, class: "choice", :checked => false %>
-          <%= ff.text_field :content, class: "w-75" %>
-        </div>
-      <% end %>
+    <%= ff.label :content %>
+    <%= ff.text_field :content, class: 'form-control' %>
+    <% if ff.object.errors.include?(:content) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:content).first %>
     <% end %>
   </div>
   <div class="form-group">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: 'form-control' %>
+    <%= ff.label :answer,"解答（選択肢内容）" %>
+    <%= ff.fields_for :question_choices do |fff| %>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><%= fff.radio_button :choice, true, class:"choice" %></span>
+        </div>
+        <%= fff.text_field :content, class: "w-75" %>
+        <div class="input-group-append">
+          <span class="input-group-text" id="basic-addon2"><%= fff.link_to_remove "選択肢削除" %></span>
+        </div>
+        <% if fff.object.errors.include?(:content) %>
+          <p style="color: red;"><%= fff.object.errors.full_messages_for(:content).first %>
+        <% end %>
+      </div>
+    <% end %>
+    <%= ff.link_to_add "選択肢追加", :question_choices, class:"add_choice_btn" %>
   </div>
-  <%= f.submit yield(:button_text), class: "btn btn-primary mt-1" %>
+  <div class="form-group">
+    <%= ff.label :description %>
+    <%= ff.text_area :description, class: 'form-control' %>
+    <% if ff.object.errors.include?(:description) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:description).first %>
+    <% end %>
+  </div>
+  <%= ff.link_to_remove "質問削除" %>
+  <hr size="5" color="black">
 <% end %>
+<div class="question_add">
+  <%= f.link_to_add "質問追加", :questions, class:"add_question_btn d-block mt-3" %>
+</div>
+<%= f.submit yield(:button_text), class: "btn btn-primary mt-1 submit-btn" %>

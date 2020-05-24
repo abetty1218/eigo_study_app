@@ -1,0 +1,23 @@
+<% provide(:title, "質問一括編集") %>
+<% provide(:button_text, '更新') %>
+<div class="mt-3 mb-5">
+  <h1 class="text-center">質問一括編集</h1>
+  <% if @problem.question_style == 2 %>
+    <%= nested_form_for(@problem, url:update_all_problem_questions_path(@problem)) do |f| %>
+      <%= render 'question_form',f: f %>
+    <% end %>
+  <% else %>
+    <%= nested_form_for(@problem, url:update_all_problem_questions_path(@problem)) do |f| %>
+      <%= render 'question_choice_form',f: f %>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  $(document).on('click','input[type="radio"]',function(){
+    $(this).parents(".fields").find('input[type="radio"]').prop('checked', false);
+    $(this).prop('checked', true);
+  });
+  $('.question_add').find(".add_question_btn").remove();
+
+</script>

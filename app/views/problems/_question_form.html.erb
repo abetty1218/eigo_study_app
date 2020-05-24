@@ -1,18 +1,31 @@
 <%= f.hidden_field :question_style, value: @question_style %>
-<%= f.hidden_field :number, value: @count + 1 %>
+<%= f.hidden_field :number, value: @count+1 %>
 <%= f.fields_for :questions do |ff| %>
-  <%= render 'shared/error_messages', object: ff.object %>
   <div class="form-group">
     <%= ff.label :content %>
     <%= ff.text_field :content, class: 'form-control' %>
+    <% if ff.object.errors.include?(:content) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:content).first %>
+    <% end %>
   </div>
   <div class="form-group">
     <%= ff.label :answer %>
     <%= ff.text_field :answer, class: 'form-control' %>
+    <% if ff.object.errors.include?(:content) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:answer).first %>
+    <% end %>
   </div>
   <div class="form-group">
     <%= ff.label :description %>
     <%= ff.text_area :description, class: 'form-control' %>
+    <% if ff.object.errors.include?(:content) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:description).first %>
+    <% end %>
   </div>
+  <%= ff.link_to_remove "質問削除" %>
+  <hr size="5" color="black">
 <% end %>
+<div>
+  <%= f.link_to_add "質問追加", :questions, class:"add_question_btn" %>
+</div>
 <%= f.submit yield(:button_text), class: "btn btn-primary mt-1" %>

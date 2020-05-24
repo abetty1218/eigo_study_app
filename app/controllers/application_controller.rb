@@ -29,6 +29,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # ログイン済み一般ユーザーかどうか確認
+ def logged_in_user
+   unless user_logged_in?
+     store_location
+     flash[:danger] = "アクセス権がありません。"
+     redirect_to root_url
+   end
+ end
+
   # ログイン済みの自分以外のユーザに入れない
   def logged_only_current_user
     if logged_in?

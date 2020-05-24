@@ -28,8 +28,8 @@ ja:
         created_at: 作成日
         updated_at: 更新日
       question_choice:
-        content: 問題
-        answer: 解答
+        content: 選択欄
+        answer: 選択欄
         description: 詳細
         created_at: 作成日
         updated_at: 更新日
