@@ -20,4 +20,26 @@
   });
   $('.question_add').find(".add_question_btn").remove();
 
+  // let choice_count = {};
+  $('.submit-btn').on("click",function(e){
+    let choice_count = {};
+    $(".container").children(".mt-3").children(".edit_problem").children(".fields:visible").each(function(index, element){
+      each_count = $(element).find('.fields:visible').find('.choice:checked').length;
+      console.log(each_count);
+      if(each_count == 0){
+        choice_count[index+1] = each_count;
+      }
+    });
+
+    if(Object.keys(choice_count).length > 0){
+      alert_statement = []
+      $.each(choice_count,function(index, element){
+        alert_statement.push(index + '番目の質問の解答となる選択肢にチェックがはいっていません。');
+      });
+      statement = alert_statement.join("\n");
+      alert(statement);
+      return false;
+    }
+  });
+  // return true;
 </script>

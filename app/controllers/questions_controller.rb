@@ -57,17 +57,20 @@ class QuestionsController < ApplicationController
 
   def update_all
     @problem = Problem.find(params[:problem_id])
-    ids = @problem.questions.ids
-    choices = QuestionChoice.where(question_id: ids).where(choice: true);
+    choice = QuestionChoice.where(question_id: 1).where(choice: true);
+    # render plain: choice.inspect
     if @problem.update_attributes(problem_params)
       problem_params["questions_attributes"].keys.each do |id|
         if problem_params["questions_attributes"][id]["question_choices_attributes"].present? && problem_params["questions_attributes"][id]["_destroy"] == "false"
           question_id = problem_params["questions_attributes"][id]["id"]
-          choice = choices.where(question_id: question_id).first
-          update_choice = QuestionChoice.where.not(id: choice.id).where(question_id: question_id).where(choice: true).first
-            if !update_choice.nil? && !choice.nil?
-              choice.choice = false
-              choice.save
+          choice = QuestionChoice.where(question_id: question_id).where(choice: true);
+          first_choice = choice.order(updated_at: :asc).first
+          if !choice.where.not(id: first_choice.id).nil?
+            update_choice = choice.where.not(id: first_choice.id).first
+          end
+            if !update_choice.nil? && !first_choice.nil?
+              first_choice.choice = false
+              first_choice.save
             end
         end
       end

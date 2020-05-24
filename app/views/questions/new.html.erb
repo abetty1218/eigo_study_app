@@ -28,8 +28,9 @@
     $('input[name="problem[questions_attributes]['+ i +'][content]"]').parent().parent().remove();
   }
 
-  let choice_count = {};
   $('.submit-btn').on("click",function(e){
+    let choice_count = {};
+    let first_count = $(".container").children(".mt-3").children(".edit_problem").children(".fields:visible").length
     $(".container").children(".mt-3").children(".edit_problem").children(".fields:visible").each(function(index, element){
       each_count = $(element).find('.fields:visible').find('.choice:checked').length;
       if(each_count == 0){
@@ -37,13 +38,12 @@
       }
     });
     $(".question_add").children(".fields:visible").each(function(index, element){
-      length = Object.keys(choice_count).length
-      each_count = $(element).find('.choice:checked').length;
+      each_count = $(element).find('.fields:visible').find('.choice:checked').length;
       if(each_count == 0){
-        choice_count[length+1] = each_count;
+        choice_count[index+first_count+1] = each_count;
       }
     });
-
+    console.log(choice_count);
     if(Object.keys(choice_count).length > 0){
       alert_statement = []
       $.each(choice_count,function(index, element){
@@ -51,6 +51,7 @@
       });
       statement = alert_statement.join("\n");
       alert(statement);
+      return false;
     }
   });
 

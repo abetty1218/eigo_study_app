@@ -17,4 +17,13 @@
     $('input[type="radio"]').prop('checked', false);
     $(this).prop('checked', true);
   });
+
+  $('.submit-btn').on("click",function(e){
+    let count;
+    count = $('.fields:visible').find('.choice:checked').length;
+    if(count == 0){
+      alert("解答となる選択肢にチェックがはいっていません。");
+      return false;
+    }
+  });
 </script>
