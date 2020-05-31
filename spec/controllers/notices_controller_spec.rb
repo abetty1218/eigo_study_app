@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 describe NoticesController do
   describe 'Get #edit' do
     context "when admin user login" do

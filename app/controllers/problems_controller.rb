@@ -5,10 +5,10 @@ class ProblemsController < ApplicationController
 
   def new
     @problem = Problem.new
-    @problem.questions.build
+    @question = @problem.questions.build
+    @question.question_choices.build
     @question_style = params[:question_style]
     @count = Problem.all.count
-    set_question_choice
   end
 
   def create

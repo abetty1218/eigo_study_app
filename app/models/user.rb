@@ -1,49 +1,45 @@
 class User < ApplicationRecord
-   has_many :question_answers, dependent: :destroy
-   before_save   :downcase_email
-   before_save { self.email = email.downcase }
-   validates :name, presence: true, length: { maximum: 50 }
-   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-   validates :email, presence:   true, length: { maximum: 255 },
+  has_many :question_answers, dependent: :destroy
+  validates :name, presence: true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  validates :email, length: { maximum: 255 },
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-   has_secure_password
-   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-   validates :check, presence: true
-
-
-   # 渡された文字列のハッシュ値を返す
-  def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
-  end
-
-  # ランダムなトークンを返す
-  def User.new_token
-    SecureRandom.urlsafe_base64
-  end
-
-   # トークンがダイジェストと一致したらtrueを返す
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-
-  def self.updatable_attributes
-    ["name", "email","password","admin","superior"]
-  end
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, :omniauthable
 
   def self.search(search)
     return User.all unless search
     User.where(['name LIKE ?', "%#{search}%"])
   end
+  validates :check, presence: true
 
-  private
-  # メールアドレスをべて小文字にする
-    def downcase_email
-      self.email = email.downcase
+  def update_without_current_password(params)
+    params.delete(:current_password)
+
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
     end
+
+    clean_up_passwords
+    update_attributes(params)
+  end
+
+  def set_values(omniauth)
+    return if provider.to_s != omniauth['provider'].to_s || uid != omniauth['uid']
+    credentials = omniauth['credentials']
+    info = omniauth['info']
+
+    access_token = credentials['refresh_token']
+    access_secret = credentials['secret']
+    credentials = credentials.to_json
+    name = info['name']
+    # self.set_values_by_raw_info(omniauth['extra']['raw_info'])
+  end
+
+  def set_values_by_raw_info(raw_info)
+    self.raw_info = raw_info.to_json
+    self.save!
+  end
 end

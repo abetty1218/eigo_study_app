@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def new
     @problem = Problem.find(params[:problem_id])
     @question = @problem.questions.build
+    @question.question_choices.build
     @count = @problem.questions.count
   end
 
@@ -22,7 +23,6 @@ class QuestionsController < ApplicationController
      else
        render 'new'
      end
-
    end
 
   def edit

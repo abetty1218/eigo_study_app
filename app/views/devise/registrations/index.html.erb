@@ -7,7 +7,7 @@
     <%= f.text_field :search, value: @search, class:"form_control mb-4 mt-4" %>
     <%= f.submit "検索する",class:"search_btn" %>
   <% end %>
- </div>
+</div>
   <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
   <table class="table-bordered table-striped col-md-12">
     <tr>
@@ -16,14 +16,17 @@
       <th class="text-center">編集</th>
       <th class="text-center">削除</th>
     </tr>
-  　<% @users.each do |user| %>
+    <% @users.each do |user| %>
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td class="text-center"><%= link_to "編集", edit_user_path(user), class: 'btn btn-primary' %></td>
         <td class="text-center">
-          <%if user.admin != true %>
-            <%= link_to "削除", user_path(user) , method: :delete, class: 'btn btn-danger',data: { confirm: "#{user.name}さんを消去してもいいですか？" } %>
+          <% if user.admin != true %>
+            <%= link_to "編集", edit_user_path(user), class: 'btn btn-primary' %></td>
+          <% end %>
+        <td class="text-center">
+          <% if user.admin != true %>
+            <%= link_to "削除", user_delete_path(user) , method: :delete, class: 'btn btn-danger',data: { confirm: "#{user.name}さんを消去してもいいですか？" } %>
           <% end %>
         </td>
       </tr>

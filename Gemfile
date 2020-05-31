@@ -37,6 +37,8 @@ gem 'will_paginate-bootstrap4'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'jquery-rails'
 gem 'nested_form'
+gem 'devise'
+gem 'omniauth-line'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

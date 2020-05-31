@@ -20,10 +20,10 @@
         <div class="input-group-append">
           <span class="input-group-text" id="basic-addon2"><%= fff.link_to_remove "選択肢削除" %></span>
         </div>
+        <% if fff.object.errors.include?(:content) %>
+          <p style="color: red;"><%= fff.object.errors.full_messages_for(:content).first %>
+        <% end %>
       </div>
-      <% if fff.object.errors.include?(:content) %>
-        <p style="color: red;"><%= fff.object.errors.full_messages_for(:content).first %>
-      <% end %>
     <% end %>
     <%= ff.link_to_add "選択肢追加", :question_choices, class:"add_choice_btn" %>
   </div>

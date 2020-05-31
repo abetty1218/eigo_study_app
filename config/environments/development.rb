@@ -7,6 +7,8 @@ Rails.application.configure do
 
   config.middleware.use RackSessionAccess::Middleware  # 追加
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   config.cache_classes = false
 
   # Do not eager load code on boot.
@@ -52,6 +54,15 @@ Rails.application.configure do
   # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }# それぞれの環境のhost名
   config.action_mailer.delivery_method = :smtp
 
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :domain => 'gmail.com',
+    :authentication => :plain,
+    :user_name => ENV["NAME"],# gmailのアドレス
+    :password => ENV["PASSWORD"],  # gmailのパスワード
+    :enable_starttls_auto => true
+  }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

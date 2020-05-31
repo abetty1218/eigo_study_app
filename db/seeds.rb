@@ -9,7 +9,7 @@ User.create!(name: "管理者",
              email: "admin@email.com",
              password: "password",
              password_confirmation: "password",
-             check: "no_male",
+             check: "no_mail",
              admin: true)
 
 60.times do |n|
@@ -20,7 +20,7 @@ User.create!(name: "管理者",
                email: email,
                password: password,
                password_confirmation: password,
-               check: "no_male"
+               check: "no_mail"
              )
 end
 
