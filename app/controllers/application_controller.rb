@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     def logged_in
       unless logged_in?
         flash[:danger] = "アクセス権がありません。"
-        redirect_to login_url
+        redirect_to new_user_session_url
       end
     end
 

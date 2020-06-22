@@ -1,9 +1,18 @@
 require 'rails_helper'
 
 RSpec.feature "NoticesNews", type: :feature do
+  include ActiveJob::TestHelper
+
+  setup do
+    ActionMailer::Base.delivery_method = :test
+    ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = true
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+  end
+
   before do
     @admin = create(:admin)
-    visit login_path
+    @user = create(:user1)
+    visit new_user_session_path
     fill_in "メールアドレス", with: @admin.email
     fill_in "パスワード", with: @admin.password
     click_button "ログイン"
@@ -31,8 +40,24 @@ RSpec.feature "NoticesNews", type: :feature do
       visit notices_path
     end
 
+    scenario "send email" do
+      click_button "登録"
+      perform_enqueued_jobs do
+        mail = ActionMailer::Base.deliveries.last
+        aggregate_failures do
+          expect(mail.to).to eq ["test@example.com"]
+          expect(mail.from).to eq ["from@example.com"]
+          expect(mail.subject).to eq "新着お知らせの通知"
+          expect(mail.body).to match "お知らせを更新しました。"
+          expect(mail.body).to match "詳細はホームページをご確認ください。"
+          expect(mail.body).to match @user.name
+        end
+      end
+
+    end
+
   end
-#
+
   feature "invalid notice create" do
     before do
       fill_in "タイトル", with: ""

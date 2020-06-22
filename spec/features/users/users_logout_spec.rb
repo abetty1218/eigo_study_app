@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Login", type: :feature do
   before do
-    visit new_user_path
+    visit new_user_registration_path
     fill_in "名前", with: "Example User"
     fill_in "メールアドレス", with: "user@example.com"
     find("input[name='user[check]'][value='mail']").set(true)

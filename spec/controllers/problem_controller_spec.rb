@@ -10,11 +10,8 @@ describe ProblemsController do
       it 'リクエストは200 OKとなること'  do
         expect(response.status).to eq 302
       end
-      # it '@problemsに全てのユーザーを割り当てること' do
-      #   expect(assigns(:problem)).to match_array @problems
-      # end
       it ':indexテンプレートを表示すること' do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
     context "管理者ログイン時" do
@@ -27,9 +24,6 @@ describe ProblemsController do
       it 'リクエストは200 OKとなること'  do
         expect(response.status).to eq 200
       end
-      # it '@problemsに全てのユーザーを割り当てること' do
-      #   expect(assigns(:problem)).to match_array @problems
-      # end
       it ':indexテンプレートを表示すること' do
         expect(response).to render_template :index
       end
@@ -64,37 +58,6 @@ describe ProblemsController do
     end
   end
 
-  # describe 'Get #show' do
-  #   context "一般ユーザーログイン時" do
-  #     before do
-  #       @user = create(:user)
-  #       log_in_as(@user)
-  #       @problem = create(:problem)
-  #       get 'show', params: { id: @problem.id }
-  #     end
-  #     it 'リクエストは200 OKとなること' do
-  #       expect(response.status).to eq 200
-  #     end
-  #     it '@userに要求されたユーザーを割り当てること' do
-  #       expect(assigns(:problem)).to eq @problem
-  #     end
-  #     it ':editテンプレートを表示すること' do
-  #       expect(response).to render_template :show
-  #     end
-  #   end
-  #   context "未ログイン時" do
-  #     before do
-  #       @problem = create(:problem)
-  #       get 'show', params: { id: @problem.id }
-  #     end
-  #     it 'リクエストは302エラーとなること' do
-  #       expect(response.status).to eq 302
-  #     end
-  #     it ':editテンプレートを表示すること' do
-  #       expect(response).to redirect_to(login_path)
-  #     end
-  #   end
-  # end
   describe 'POST #create' do
     before do
       @problem = attributes_for(:problem)

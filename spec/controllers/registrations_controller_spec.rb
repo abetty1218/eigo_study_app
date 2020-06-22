@@ -1,8 +1,9 @@
 require 'rails_helper'
-describe UsersController do
+describe Users::RegistrationsController do
   describe 'Get #edit' do
     context "when no user login" do
       before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         @user = create(:user)
         get 'edit', params: { id: @user.id }
       end
@@ -10,7 +11,7 @@ describe UsersController do
         expect(response.status).to eq 302
       end
       it 'redirects to login_path' do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
     context "when user login" do
@@ -19,7 +20,7 @@ describe UsersController do
         @user2 = create(:user)
         log_in_as(@user1)
       end
-      context "when sane user" do
+      context "when same user" do
         before do
           get 'edit', params: { id: @user1.id }
         end
@@ -35,6 +36,7 @@ describe UsersController do
       end
       context "when other user" do
         before do
+          @request.env['devise.mapping'] = Devise.mappings[:user]
           get 'edit', params: { id: @user2.id }
         end
         it 'has a 302 status codeと' do
@@ -63,8 +65,9 @@ describe UsersController do
         expect(response).to render_template :index
       end
     end
-    context "未ログイン時" do
+    context "when no login" do
       before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         get 'index'
       end
       it 'has a 302 status code' do
@@ -77,7 +80,10 @@ describe UsersController do
   end
 
   describe 'GET #new' do
-    before { get :new, params: {}, session: {} }
+    before {
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      get :new, params: {}, session: {}
+    }
 
     it 'has a 200 status code' do
       expect(response.status).to eq 200
@@ -95,6 +101,7 @@ describe UsersController do
   describe 'POST #create' do
     context "when user login" do
       before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         @user = attributes_for(:user)
         @not_user = attributes_for(:user,name:nil)
       end
@@ -129,12 +136,13 @@ describe UsersController do
   describe 'PATCH #update' do
       let(:update_attributes) do
         {
-            name: 'update title',
-            email: 'aaa@gmail.com'
+           name: 'update title',
+           email: 'aaa@gmail.com'
         }
       end
     context "when no user login" do
       before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         @user = create(:user)
       end
       it 'no change users count' do
@@ -152,7 +160,7 @@ describe UsersController do
 
       it 'redirects login_path' do
         patch :update, params: { id: @user.id, user: update_attributes}, session: {}
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -258,6 +266,7 @@ describe UsersController do
     end
     context "when user no login" do
       before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         @user = create(:user)
       end
       it 'no deletes user no change users count' do
@@ -267,7 +276,7 @@ describe UsersController do
       end
       it 'redirects root_path' do
         delete :destroy, params: { id: @user.id }, session: {}
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end

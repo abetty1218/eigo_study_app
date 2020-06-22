@@ -6,7 +6,7 @@ RSpec.feature "QuestionsAnswerIndex", type: :feature do
     @question = create(:question,problem_id: @problem.id)
     @user = create(:user)
     @answer = create(:question_answer,problem_id: @problem.id,question_id: @question.id,user_id: @user.id)
-    visit login_path
+    visit new_user_session_path
     fill_in "メールアドレス", with: @user.email
     fill_in "パスワード", with: @user.password
     click_button "ログイン"

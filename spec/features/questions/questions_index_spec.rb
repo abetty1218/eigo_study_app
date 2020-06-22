@@ -4,7 +4,7 @@ RSpec.feature "QuestionsIndex", type: :feature do
     @problem = create(:problem)
     @questions = create_list(:question, 30,problem_id: @problem.id)
     @admin = create(:admin)
-    visit login_path
+    visit new_user_session_path
     fill_in "メールアドレス", with: @admin.email
     fill_in "パスワード", with: @admin.password
     click_button "ログイン"

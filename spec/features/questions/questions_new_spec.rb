@@ -4,7 +4,7 @@ RSpec.feature "QuestionsNews", type: :feature do
 
   before do
     @admin = create(:admin)
-    visit login_path
+    visit new_user_session_path
     fill_in "メールアドレス", with: @admin.email
     fill_in "パスワード", with: @admin.password
     click_button "ログイン"

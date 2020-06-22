@@ -3,6 +3,10 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  before_action :logged_not_in, only: [:new]
+  before_action :logged_in, only: [:edit,:update]
+  before_action :logged_in_admin, only: [:index,:destroy]
+  before_action :correct_user, only: [:edit,:update]
 
   def index
     @search = params[:search]
@@ -86,6 +90,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # 追記する
     def update_resource(resource, params)
       resource.update_without_current_password(params)
+    end
+   # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:id])
+      unless current_user.admin == true
+        unless current_user?(@user)
+          flash[:danger] ="他のユーザーのサイトにはアクセスできません。"
+          redirect_to root_url
+        end
+      end
     end
 
 end
