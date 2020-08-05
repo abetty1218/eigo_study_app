@@ -21,13 +21,13 @@ module ProblemHelper
   def get_name(problem,first_answer)
     if problem.question_style == 1
       if first_answer.count == problem.questions.count
-        "再チャレンンジ（選択式）!!"
+        "再チャレンジ（選択式）!!"
       else
         "問題（選択式）"
       end
     else
       if first_answer.count == problem.questions.count
-        "再チャレンンジ（記述式）!!"
+        "再チャレンジ（記述式）!!"
       else
         "問題（記述式）"
       end

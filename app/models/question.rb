@@ -5,7 +5,8 @@ class Question < ApplicationRecord
    accepts_nested_attributes_for :question_choices, allow_destroy: true
    validates :content, presence: true, length: { maximum: 20 }
    validate :answer_present
-   validates :description, presence: true, length: { maximum: 255 }
+   validates :japaneseexample, presence: true, length: { maximum: 255 }
+   validates :englishexample, presence: true, length: { maximum: 255 }
 
 
    def answer_present

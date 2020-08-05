@@ -58,7 +58,6 @@ class QuestionsController < ApplicationController
   def update_all
     @problem = Problem.find(params[:problem_id])
     choice = QuestionChoice.where(question_id: 1).where(choice: true);
-    # render plain: choice.inspect
     if @problem.update_attributes(problem_params)
       problem_params["questions_attributes"].keys.each do |id|
         if problem_params["questions_attributes"][id]["question_choices_attributes"].present? && problem_params["questions_attributes"][id]["_destroy"] == "false"
@@ -110,12 +109,12 @@ class QuestionsController < ApplicationController
 
   private
     def question_update_params
-      params.require(:question).permit(:id, :content, :answer, :description, question_choices_attributes: [:id, :choice,:content,:_destroy])
+      params.require(:question).permit(:id, :content, :answer, :japaneseexample, :englishexample, question_choices_attributes: [:id, :choice,:content,:_destroy])
     end
 
     def problem_params
       params.require(:problem).permit(:id,
-        questions_attributes: [:id, :content, :answer, :description,:_destroy,
+        questions_attributes: [:id, :content, :answer, :japaneseexample, :englishexample, :_destroy,
           question_choices_attributes: [:id, :choice, :content, :_destroy]
         ]
       )

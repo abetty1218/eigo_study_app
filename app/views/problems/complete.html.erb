@@ -4,7 +4,7 @@
   <h1 class="text-center">回答結果</h1>
   <h2 class="text-center mt-3">おつかれさまでした。!!</h2>
   <div class="correct-rate mt-4 text-center">
-    <span class="mr-4"><%= @correct_count %>/<%= @question_count %>正解</span>
+    <span class="mr-4"><%= @correct_count %>問/<%= @question_count %>問中　正解</span>
     <span>正答率:<%= @correct_count/@question_count %>%です。</span>
   </div>
   <%= link_to "問題一覧へ",problems_path,class: "btn btn-success col-md-4 offset-4 mt-5" %>

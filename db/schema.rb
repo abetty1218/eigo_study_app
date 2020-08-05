@@ -55,7 +55,8 @@ ActiveRecord::Schema.define(version: 20200529174117) do
   create_table "questions", force: :cascade do |t|
     t.string "content"
     t.string "answer"
-    t.string "description"
+    t.string "japaneseexample"
+    t.string "englishexample"
     t.integer "problem_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

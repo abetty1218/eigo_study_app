@@ -28,10 +28,17 @@
     <%= ff.link_to_add "選択肢追加", :question_choices, class:"add_choice_btn" %>
   </div>
   <div class="form-group">
-    <%= ff.label :description %>
-    <%= ff.text_area :description, class: 'form-control' %>
-    <% if ff.object.errors.include?(:description) %>
-      <p style="color: red;"><%= ff.object.errors.full_messages_for(:description).first %>
+    <%= ff.label :englishexample %>
+    <%= ff.text_field :englishexample, class: 'form-control' %>
+    <% if ff.object.errors.include?(:englishexample) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:englishexample).first %>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= ff.label :japaneseexample %>
+    <%= ff.text_field :japaneseexample, class: 'form-control' %>
+    <% if ff.object.errors.include?(:japaneseexample) %>
+      <p style="color: red;"><%= ff.object.errors.full_messages_for(:japaneseexample).first %>
     <% end %>
   </div>
   <%= ff.link_to_remove "質問削除" %>

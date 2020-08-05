@@ -72,7 +72,7 @@ class ProblemsController < ApplicationController
   private
     def problem_params
        params.require(:problem).permit(:id,:question_style,:number,
-         questions_attributes: [:id, :content, :answer, :description,:_destroy,
+         questions_attributes: [:id, :content, :answer, :japaneseexample, :englishexample, :_destroy,
            question_choices_attributes: [:id, :choice, :content, :_destroy]
          ]
        )

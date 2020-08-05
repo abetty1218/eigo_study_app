@@ -26,7 +26,7 @@
     <% if @answer.present? %>
       <div class="w-100 ml-3 mt-4">
         <button type = "button" class="btn btn-primary d-block description-button">解説をみる</button>
-      <div class="description mt-2"><%= @question.description %></div>
+      <div class="description mt-2"><%= @question.englishexample %></br><%= @question.japaneseexample %></div>
     </div>
     <% end %>
     <% if @answer_count == @question_count %>
