@@ -1,13 +1,12 @@
 <div class="text-center jumbotron site_title_layout">
-<h1 class="site_title">英単語学習アプリ</h1>
-<% if !logged_in? %>
-  <div>
-    <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary account_btn" %>
-    <%= link_to "アカウント作成", new_user_registration_path,class:"btn btn-success account_btn" %>
-  </div>
-<% end %>
+  <h1 class="site_title">英単語学習アプリ</h1>
+  <% if !logged_in? %>
+    <div>
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary account_btn" %>
+      <%= link_to "アカウント作成", new_user_registration_path,class:"btn btn-success account_btn" %>
+    </div>
+  <% end %>
 </div>
-<div>
 <div class="col-md-10 offset-1 site_heading text-center pt-4 pb-4 rounded">
   <h2>英単語学習アプリとは？</h2>
   <p id="information-content">クイズ形式の簡単な英単語の学習アプリです。!!ゲーム感覚で楽しく学習が進められます。</p>
@@ -27,30 +26,29 @@
     <% end %>
   </ul>
 </div>
-<div class="mt-5">
+<div class="mt-5 mb-5">
   <h2 class="text-center">英単語アプリの特徴!!</h2>
   <p class="text-success">図をクリックすると拡大図が表示されます。</p>
   <div class="card mt-1">
-    <div class="card-header">
-      <h3>クイズ形式で英単語の問題を出題</h3>
+    <div class="card-header bg-success">
+      <h3 class="text-white">クイズ形式で英単語の問題を出題</h3>
     </div>
     <div class="card-body d-flex">
-    　<div class="col-md-6">選択式もしくは、記述式の形で、クイズ形式で英単語の学習ができます。勉強をしているという感覚がなく、ゲーム感覚で楽しく学習を進められます。また、設問ごとに簡単な解説をついており、より理解を深めることができます。</div>
-      <div class="col-md-6">
-        <img src="assets/eigo.jpg" class="sample" width="100%" class="mb-3" data-toggle="modal" data-target="#picture" data-id="assets/eigo.jpg">
+    　<div class="col-md-6">選択式もしくは、記述式の形で、クイズ形式で英単語の学習ができます。勉強をしているという感覚がなく、ゲーム感覚で楽しく学習を進められます。また、設問ごとに例文もついており、文章の中での単語の使い方も学習できます。</div>
+      <div class="col-md-6 border border-primary rounded">
+        <img src="assets/question.png" class="sample" width="100%" class="mb-3" data-toggle="modal" data-target="#picture" data-id="assets/question.png">
       </div>
     </div>
   </div>
   <div class="card mt-3">
-    <div class="card-header">
-      <h3>学習記録を管理</h3>
+    <div class="card-header bg-primary">
+      <h3 class="text-white">学習記録を管理</h3>
     </div>
     <div class="card-body d-flex">
-      <div class="col-md-6">
-        <img src="assets/eigo.jpg" class="sample" width="100%" class="mb-3" data-toggle="modal" data-target="#picture" data-id="assets/eigo.jpg">
+      <div class="col-md-6 border border-primary rounded">
+        <img src="assets/problem.jpg" class="sample" width="100%" class="mb-3" data-toggle="modal" data-target="#picture" data-id="assets/problem.jpg">
       </div>
-      <div class="col-md-6">各問題ごとの回答状況および、正答率を一覧で表示し、学習記録を管理することができます。また、一度回答した問題も、何度でも再チャレンジすることができるため、間違えた問題を何度も復習することでより理解を深めることが
-        　　　　　　　　　　　できます。
+      <div class="col-md-6">各問題ごとの回答状況および、正答率を一覧で表示し、学習記録を管理することができます。また、一度回答した問題も、何度でも再チャレンジすることができるため、間違えた問題を何度も復習することでより理解を深めることができます。
       </div>
     </div>
   </div>

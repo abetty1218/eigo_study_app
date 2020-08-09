@@ -7,13 +7,9 @@
   <div class="mt-3 row">
     <div class="col-6">
       <% if @problem.question_style == 2 %>
-        <%= form_with(model:@question_answer, url:questions_answers_path,local:true) do |f| %>
-          <%= render 'question_answer_form',f: f %>
-        <% end %>
+        <%= render 'questions/question_answer_form' %>
       <% else %>
-        <%= form_with(model:@question_answer, url:questions_answers_path,local:true) do |f| %>
-          <%= render 'question_choice_answer_form',f: f %>
-        <% end %>
+        <%= render 'questions/question_choice_answer_form' %>
       <% end %>
     </div>
     <div class="col-6">
@@ -21,18 +17,23 @@
         <div class= "text-success ml-5 mt-4 correct-font">正解<span class="ml-2 figure-font">○</span></div>
       <% elsif @answer.present? && @answer.correct == false %>
         <div class= "text-danger ml-5 mt-4 correct-font">不正解<span class="ml-2 figure-font">×</span></div>
+        <% if @problem.question_style == 2 %>
+          <div class="ml-5 mt-1 correct-notice">正解は「<%= @question.answer %>」です。</div>
+        <% else %>
+          <div class="ml-5 mt-1 correct-notice">正解は「<%= @question.question_choices[@question.answer.to_i - 1].content %>」です。</div>
+        <% end %>
       <% end %>
     </div>
     <% if @answer.present? %>
       <div class="w-100 ml-3 mt-4">
-        <button type = "button" class="btn btn-primary d-block description-button">解説をみる</button>
+        <button type = "button" class="btn btn-primary d-block description-button">例文</button>
       <div class="description mt-2"><%= @question.englishexample %></br><%= @question.japaneseexample %></div>
     </div>
     <% end %>
     <% if @answer_count == @question_count %>
-      <%= link_to "回答結果", complete_problem_path(@problem), class: "btn btn-success col-md-4 offset-4 mt-5" %>
+      <%= link_to "回答結果", complete_problem_path(@problem,try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
     <% elsif @answer %>
-      <%= link_to "次の質問へ", answer_problem_question_path(@problem,params[:id].to_i+1,retry:@retry), class: "btn btn-success col-md-4 offset-4 mt-5" %>
+      <%= link_to "次の質問へ", answer_problem_question_path(@problem,@question.id.to_i+1,try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
     <% end %>
   </div>
 </div>

@@ -3,11 +3,17 @@
   <h1 class="text-center">質問詳細</h1>
   <div class="answer_show">
     <div>質問</div>
-    <div><%= @question.content %>
+    <div><%= @question.content %></div>
   </div>
   <div class="answer_show mt-5">
     <div>解答</div>
-    <div><%= @question.answer %>
+    <div>
+      <% if @problem.question_style == 2 %>
+        <%= @question.answer %>
+      <% else %>
+        <%= @question.question_choices[@question.answer.to_i - 1].content %>
+      <% end %>
+    </div>
   </div>
   <div class="answer_show mt-5">
     <div>例文</div>

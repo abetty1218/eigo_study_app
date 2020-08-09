@@ -49,7 +49,7 @@ class ProblemsController < ApplicationController
   end
 
   def complete
-    @try = params[:try]
+    @try = params[:try].to_i
     @problem = Problem.find(params[:id])
     @correct_count = current_user.question_answers.where(problem_id: params[:id]).where(correct: true).where(try: @try).count
     @question_count = @problem.questions.count

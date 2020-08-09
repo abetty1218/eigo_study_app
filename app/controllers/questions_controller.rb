@@ -91,6 +91,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @problem = Problem.find(params[:problem_id])
     @question = Question.find(params[:id])
   end
 

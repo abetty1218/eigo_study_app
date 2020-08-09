@@ -10,33 +10,47 @@
       <th class="text-center">詳細</th>
     </tr>
   　<% @questions.each do |question| %>
+      <% user_answer = current_user.question_answers.where(problem_id: @problem.id) %>
+      <% last_try = user_answer.pluck(:try).last %>
+      <% current_answer = user_answer.where(try: last_try) %>
+      <% if current_answer.count == @problem.questions.count %>
+        <% try = last_try %>
+      <% else %>
+        <% try = last_try - 1 %>
+      <% end %>
       <tr>
         <td class="text-center"><%= question.content %></td>
         <td class="text-center">
-          <% if current_user.question_answers.find_by(question_id: question.id).present? %>
-            <%= current_user.question_answers.find_by(question_id: question.id).answer %>
+          <% if current_user.question_answers.where(question_id: question.id).present? %>
+            <% if @problem.question_style == 2 %>
+              <% current_user.question_answers.where(question_id: question.id).find_by(try: try).answer %>
+            <% else %>
+              <% number = current_user.question_answers.where(question_id: question.id).find_by(try: try).answer.to_i %>
+              <%= question.question_choices[number - 1].content %>
+            <% end %>
           <% end %>
         </td>
         <td class="text-center">
           <% if @problem.question_style == 2 %>
-            <%= answer = question.answer %>
+            <%= question.answer %>
           <% else %>
             <% question.question_choices.each_with_index do |choice, id| %>
               <% if choice.choice == true %>
-                <%= answer = (id + 1).to_s %>
+                <%= choice.content %>
               <% end %>
             <% end %>
           <% end %>
         </td>
         <td class="text-center">
-          <% if current_user.question_answers.find_by(question_id: question.id).present? %>
-          　<% if current_user.question_answers.find_by(question_id: question.id).correct == true %>
-             正解
-          　<% elsif current_user.question_answers.find_by(question_id: question.id).correct == false %>
-             不正解
+          <% if current_user.question_answers.where(question_id: question.id).present? %>
+          　<% if current_user.question_answers.where(question_id: question.id).find_by(try: try).correct == true %>
+              正解
+          　<% elsif current_user.question_answers.where(question_id: question.id).find_by(try: try).correct == false %>
+              不正解
             <% end %>
           <% end %>
         </td>
+
         <td class="text-center"><%= link_to "詳細", problem_question_path(@problem,question), class: 'btn btn-primary' %></td>
       </tr>
     <% end %>
