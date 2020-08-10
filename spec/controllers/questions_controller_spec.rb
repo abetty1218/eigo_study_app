@@ -81,9 +81,6 @@ describe QuestionsController do
       it 'リクエストは200 OKとなること'  do
         expect(response.status).to eq 302
       end
-      # it '@questionsに全てのユーザーを割り当てること' do
-      #   expect(assigns(:question)).to match_array @questions
-      # end
       it ':indexテンプレートを表示すること' do
         expect(response).to redirect_to(root_path)
       end
@@ -99,9 +96,6 @@ describe QuestionsController do
       it 'リクエストは200 OKとなること'  do
         expect(response.status).to eq 200
       end
-      # it '@questionsに全てのユーザーを割り当てること' do
-      #   expect(assigns(:question)).to match_array @questions
-      # end
       it ':indexテンプレートを表示すること' do
         expect(response).to render_template :index
       end
@@ -118,9 +112,6 @@ describe QuestionsController do
       it 'リクエストは302 となること'  do
         expect(response.status).to eq 302
       end
-      # it '@questionsに全てのユーザーを割り当てること' do
-      #   expect(assigns(:question)).to match_array @questions
-      # end
       it ':indexテンプレートを表示すること' do
         expect(response).to redirect_to(root_path)
       end
@@ -136,9 +127,6 @@ describe QuestionsController do
       it 'リクエストは200 OKとなること'  do
         expect(response.status).to eq 200
       end
-      # it '@questionsに全てのユーザーを割り当てること' do
-      #   expect(assigns(:question)).to match_array @questions
-      # end
       it ':indexテンプレートを表示すること' do
         expect(response).to render_template :answer_index
       end
@@ -261,7 +249,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japaneseexample"=> "これは、本です",
+                "englishexample"=> "This is a book",
                 "_destroy"=> "false"
               }
             }
@@ -299,7 +288,8 @@ describe QuestionsController do
               		 	  "_destroy"=>"false"
               			},
             	 	},
-                "description"=> "aaaa",
+                "japaneseexample"=> "これは、本です",
+                "englishexample"=> "This is a book",
                 "_destroy"=> "false"
               }
             }
@@ -331,7 +321,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japanseexample"=> "これは、本です",
+                "englishexample"=> "This is a book",
                 "_destroy"=> "false"
               },
               "2"=>
@@ -339,7 +330,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japanseexample"=> "これは、本です",
+                "englishexample"=> "This is a book",
                 "_destroy"=> "false"
               }
             }
@@ -367,7 +359,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japanseexample"=> "これは、本です",
+                "englishexample"=> "This is a book",
                 "_destroy"=> "false",
                 "id" => @question.id
               },
@@ -376,7 +369,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japanseexample"=> "これは、本です",
+                "englishexample"=> "This is a book",
                 "_destroy"=> "false",
                 "id" => @question2.id
               }
@@ -428,7 +422,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japanseexample"=> "これは、私の本です",
+                "englishexample"=> "This is my book",
                 "_destroy"=> "false",
                 "id" => @question.id,
                 "question_choices_attributes"=>{
@@ -449,7 +444,8 @@ describe QuestionsController do
                 "problem_id"=> @problem.id,
                 "content"=> "aaaa",
                 "answer"=> "aaaa",
-                "description"=> "aaaa",
+                "japanseexample"=> "これは、私の本です",
+                "englishexample"=> "This is my book",
                 "_destroy"=> "false",
                 "id" => @question2.id,
                 "question_choices_attributes"=>{
@@ -480,11 +476,13 @@ describe QuestionsController do
           @question.reload
           expect(@question.content).not_to eq problem_attributes["0"]["content"]
           expect(@question.answer).not_to eq problem_attributes["0"]["answer"]
-          expect(@question.description).not_to eq problem_attributes["0"]["description"]
+          expect(@question.japaneseexample).not_to eq problem_attributes["0"]["japaneseexample"]
+          expect(@question.englishexample).not_to eq problem_attributes["0"]["englishexample"]
           @question2.reload
           expect(@question2.content).not_to eq problem_attributes["1"]["content"]
           expect(@question2.answer).not_to eq problem_attributes["1"]["answer"]
-          expect(@question2.description).not_to eq problem_attributes["1"]["description"]
+          expect(@question.japaneseexample).not_to eq problem_attributes["1"]["japaneseexample"]
+          expect(@question.englishexample).not_to eq problem_attributes["1"]["englishexample"]
           @choice.reload
           expect(@choice.content).to eq update_attributes["question_choices_attributes"]["0"]["content"]
           @choice2.reload
@@ -509,7 +507,8 @@ describe QuestionsController do
         {
           content: 'update title',
           answer: 'update title',
-          description: 'update title'
+          japanseexample: "これは、私の本です",
+          englishexample: "This is my book"
         }
       end
       it 'saves updated question' do
@@ -522,7 +521,8 @@ describe QuestionsController do
         @question.reload
         expect(@question.content).not_to eq update_attributes[:content]
         expect(@question.answer).not_to eq update_attributes[:answer]
-        expect(@question.description).not_to eq update_attributes[:description]
+        expect(@question.japaneseexample).not_to eq update_attributes[:japaneseexample]
+        expect(@question.englishexample).not_to eq update_attributes[:englishexample]
       end
 
       it 'redirects the :create template' do
@@ -541,7 +541,8 @@ describe QuestionsController do
         {
           content: 'update title',
           answer: 'update title',
-          description: 'update title'
+          japaneseexample: "これは、私の本です",
+          englishexample: "This is my book"
         }
       end
       it 'saves updated question' do
@@ -555,7 +556,8 @@ describe QuestionsController do
         @question.reload
         expect(@question.content).to eq update_attributes[:content]
         expect(@question.answer).to eq update_attributes[:answer]
-        expect(@question.description).to eq update_attributes[:description]
+        expect(@question.japaneseexample).to eq update_attributes[:japaneseexample]
+        expect(@question.englishexample).to eq update_attributes[:englishexample]
       end
 
       it 'redirects the :create template' do
@@ -576,7 +578,8 @@ describe QuestionsController do
         {
           content: 'update title',
           answer: 'update title',
-          description: 'update title',
+          japaneseexample: "これは、私の本です",
+          englishexample: "This is my book",
           "question_choices_attributes"=>{
             "1"=>
               {
@@ -598,7 +601,8 @@ describe QuestionsController do
         @question.reload
         expect(@question.content).to eq update_attributes[:content]
         expect(@question.answer).to eq update_attributes[:answer]
-        expect(@question.description).to eq update_attributes[:description]
+        expect(@question.japaneseexample).to eq update_attributes[:japaneseexample]
+        expect(@question.englishexample).to eq update_attributes[:englishexample]
         @choice.reload
         expect(@choice.content).to eq update_attributes["question_choices_attributes"]["1"]["content"]
       end

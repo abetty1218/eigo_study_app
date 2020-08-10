@@ -38,7 +38,7 @@ describe QuestionsAnswersController do
 
       it 'redirects the :create template' do
         post :create, params: { question_answer: @answer}, session: {}
-        expect(response).to redirect_to(answer_problem_question_url(@problem.id,@question.id,try: @try))
+        expect(response).to render_template("questions/answer")
       end
 
       it 'save correct true' do

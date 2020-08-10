@@ -18,12 +18,6 @@ RSpec.describe Notice, type: :model do
     expect(notice.errors[:title]).to include("は100桁以内で入力してください")
   end
 
-  it "is invalid without a description" do
-    notice = build(:notice,description: nil)
-    notice.valid?
-    expect(notice.errors[:description]).to include("を入力してください")
-  end
-
   it "is invalid a description larger than 255 letters" do
     notice = build(:notice,description: "a"*256)
     notice.valid?

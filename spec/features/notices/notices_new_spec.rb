@@ -61,7 +61,6 @@ RSpec.feature "NoticesNews", type: :feature do
   feature "invalid notice create" do
     before do
       fill_in "タイトル", with: ""
-      fill_in "詳細", with: ""
     end
 
     scenario "no difference notices count" do
@@ -71,7 +70,6 @@ RSpec.feature "NoticesNews", type: :feature do
     scenario "is show error messages" do
       click_button "登録"
       expect(page).to have_content "タイトルを入力してください"
-      expect(page).to have_content "詳細を入力してください"
     end
   end
 end

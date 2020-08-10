@@ -23,6 +23,7 @@ RSpec.feature "QuestionsAnswerIndex", type: :feature do
     expect(page).to have_css("h1", text: "詳細")
     expect(page).to have_css("div", text: @question.content)
     expect(page).to have_css("div", text: @question.answer)
-    expect(page).to have_css("div", text: @question.description)
+    expect(page).to have_css("div", text: @question.japaneseexample)
+    expect(page).to have_css("div", text: @question.englishexample)
   end
 end

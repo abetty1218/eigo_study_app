@@ -24,15 +24,27 @@ RSpec.describe Question, type: :model do
     expect(question.errors[:answer]).to include("を入力してください")
   end
 
-  it "is invalid without a description" do
-    question = build(:question,description: nil)
+  it "is invalid without a japaneseexample" do
+    question = build(:question,japaneseexample: nil)
     question.valid?
-    expect(question.errors[:description]).to include("を入力してください")
+    expect(question.errors[:japaneseexample]).to include("を入力してください")
   end
 
-  it "is invalid a description larger than 255 letters" do
-    question = build(:question,description: "a"*256)
+  it "is invalid a japaneseexample larger than 255 letters" do
+    question = build(:question,japaneseexample: "a"*256)
     question.valid?
-    expect(question.errors[:description]).to include("は255桁以内で入力してください")
+    expect(question.errors[:japaneseexample]).to include("は255桁以内で入力してください")
+  end
+
+  it "is invalid without a englishexample" do
+    question = build(:question,englishexample: nil)
+    question.valid?
+    expect(question.errors[:englishexample]).to include("を入力してください")
+  end
+
+  it "is invalid a englishexample larger than 255 letters" do
+    question = build(:question,englishexample: "a"*256)
+    question.valid?
+    expect(question.errors[:englishexample]).to include("は255桁以内で入力してください")
   end
 end

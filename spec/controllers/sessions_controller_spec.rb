@@ -20,7 +20,7 @@ RSpec.describe Users::SessionsController, type: :controller do
       post :create, params: { session: { email: "tester1@example.com", password:"dottle-nouveau-pavilion-tights-furze"}}
       expect(response.status).to eq(302)
     end
-    it "ログインできないsこと" do
+    it "トップ画面に遷移すること" do
       post :create, params: { session: { email: "tester1@example.com", password:"dottle-nouveau-pavilion-tights-furze"}}
       expect(response).to redirect_to(root_url)
     end
@@ -34,7 +34,7 @@ RSpec.describe Users::SessionsController, type: :controller do
       get :new
       expect(response.status).to eq(200)
     end
-    it "sessions/newにアクセスできること" do
+    it "ログインができること" do
       post :create, params: { session: { email: "tester1@example.com", password:"dottle-nouveau-pavilion-tights-furze"}}
       expect(response.status).to eq(200)
     end

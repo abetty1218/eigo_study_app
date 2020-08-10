@@ -2,14 +2,16 @@ FactoryBot.define do
   factory :question do
     content {"aaaa"}
     answer {"aaaa"}
-    description {"aaaaaああああ"}
+    japaneseexample {"これは本です。"}
+    englishexample {"This is a book"}
     association :problem
   end
 
   factory :check_question, class: Question do
     content {"aaaa"}
     answer {1}
-    description {"aaaaa"}
+    japaneseexample {"これは本です。"}
+    englishexample {"This is a book"}
     association :problem
   end
 end

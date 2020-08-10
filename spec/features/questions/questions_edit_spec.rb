@@ -24,7 +24,8 @@ RSpec.feature "QuestionsEdit", type: :feature do
     scenario "successful edit" do
       find("input[name='question[content]']").set("あああ")
       find("input[name='question[answer]']").set("あああ")
-      find("textarea[name='question[description]']").set("あああ")
+      find("input[name='question[japaneseexample]']").set("これは、本です")
+      find("input[name='question[englishexample]']").set("This is a book")
       click_button "更新"
       expect(current_path).to eq problem_questions_path(@problem)
       expect(@question.reload.content).to eq "あああ"
@@ -34,7 +35,8 @@ RSpec.feature "QuestionsEdit", type: :feature do
     scenario "unsuccessful edit" do
       find("input[name='question[content]']").set("")
       find("input[name='question[answer]']").set("あああ")
-      find("textarea[name='question[description]']").set("あああ")
+      find("input[name='question[japaneseexample]']").set("これは、本です")
+      find("input[name='question[englishexample]']").set("This is a book")
       click_button "更新"
       expect(@question.reload.content).to_not eq "あああ"
     end
@@ -60,7 +62,8 @@ RSpec.feature "QuestionsEdit", type: :feature do
       find("input[name='question[content]']").set("ああああ")
       find("input[name='question[question_choices_attributes][1][choice]']").set(true)
       find("input[name='question[question_choices_attributes][1][content]']").set("ssssss")
-      find("textarea[name='question[description]']").set("aaaa")
+      find("input[name='question[japaneseexample]']").set("これは、本です")
+      find("input[name='question[englishexample]']").set("This is a book")
       click_button "更新"
       expect(@choice2.reload.choice).to eq true
       expect(@choice.reload.choice).to eq false
@@ -71,7 +74,8 @@ RSpec.feature "QuestionsEdit", type: :feature do
       find("input[name='question[content]']").set("ああああ")
       find("input[name='question[question_choices_attributes][1][choice]']").set(true)
       find("input[name='question[question_choices_attributes][1][content]']").set("")
-      find("textarea[name='question[description]']").set("aaaa")
+      find("input[name='question[japaneseexample]']").set("これは、本です")
+      find("input[name='question[englishexample]']").set("This is a book")
       click_button "更新"
       expect(@choice2.reload.choice).to eq false
     end

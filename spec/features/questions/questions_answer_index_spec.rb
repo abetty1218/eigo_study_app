@@ -2,7 +2,6 @@ require 'rails_helper'
 RSpec.feature "QuestionsAnswerIndex", type: :feature do
   before do
     @problem = create(:problem1)
-    # @questions = create_list(:question,5,problem_id: @problem.id)
     @question = create(:question,problem_id: @problem.id)
     @user = create(:user)
     @answer = create(:question_answer,problem_id: @problem.id,question_id: @question.id,user_id: @user.id)

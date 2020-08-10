@@ -24,10 +24,12 @@ RSpec.feature "QuestionsEdit", type: :feature do
     scenario "successful edit" do
       find("input[name='problem[questions_attributes][0][content]']").set("aaaa")
       find("input[name='problem[questions_attributes][0][answer]']").set("aaaa")
-      find("textarea[name='problem[questions_attributes][0][description]']").set("aaaa")
+      find("input[name='problem[questions_attributes][0][japaneseexample]']").set("これは、本です")
+      find("input[name='problem[questions_attributes][0][englishexample]']").set("This is a book")
       find("input[name='problem[questions_attributes][1][content]']").set("aaaa")
       find("input[name='problem[questions_attributes][1][answer]']").set("aaaa")
-      find("textarea[name='problem[questions_attributes][1][description]']").set("aaaa")
+      find("input[name='problem[questions_attributes][1][japaneseexample]']").set("これは、本です")
+      find("input[name='problem[questions_attributes][1][englishexample]']").set("This is a book")
       click_button "更新"
       expect(current_path).to eq problem_questions_path(@problem)
       expect(@question.reload.content).to eq "aaaa"
@@ -38,7 +40,8 @@ RSpec.feature "QuestionsEdit", type: :feature do
     scenario "unsuccessful edit" do
       find("input[name='problem[questions_attributes][0][content]']").set("")
       find("input[name='problem[questions_attributes][0][answer]']").set("aaaa")
-      find("textarea[name='problem[questions_attributes][0][description]']").set("aaaa")
+      find("input[name='problem[questions_attributes][1][japaneseexample]']").set("これは、本です")
+      find("input[name='problem[questions_attributes][1][englishexample]']").set("This is a book")
       click_button "更新"
       expect(@question.reload.content).to_not eq "ああああ"
     end
@@ -64,11 +67,13 @@ RSpec.feature "QuestionsEdit", type: :feature do
       find("input[name='problem[questions_attributes][0][content]']").set("aaaa")
       find("input[name='problem[questions_attributes][0][question_choices_attributes][1][choice]']").set(true)
       find("input[name='problem[questions_attributes][0][question_choices_attributes][1][content]']").set("ssssss")
-      find("textarea[name='problem[questions_attributes][0][description]']").set("aaaa")
+      find("input[name='problem[questions_attributes][0][japaneseexample]']").set("これは、本です")
+      find("input[name='problem[questions_attributes][0][englishexample]']").set("This is a book")
       find("input[name='problem[questions_attributes][1][content]']").set("aaaa")
       find("input[name='problem[questions_attributes][1][question_choices_attributes][1][choice]']").set(true)
       find("input[name='problem[questions_attributes][1][question_choices_attributes][1][content]']").set("ssssss")
-      find("textarea[name='problem[questions_attributes][1][description]']").set("aaaa")
+      find("input[name='problem[questions_attributes][1][japaneseexample]']").set("これは、本です")
+      find("input[name='problem[questions_attributes][1][englishexample]']").set("This is a book")
       click_button "更新"
       expect(@choice2.reload.choice).to eq true
       expect(@choice.reload.choice).to eq false
@@ -81,7 +86,8 @@ RSpec.feature "QuestionsEdit", type: :feature do
       find("input[name='problem[questions_attributes][0][content]']").set("aaaa")
       find("input[name='problem[questions_attributes][0][question_choices_attributes][1][choice]']").set(true)
       find("input[name='problem[questions_attributes][0][question_choices_attributes][1][content]']").set("")
-      find("textarea[name='problem[questions_attributes][0][description]']").set("aaaa")
+      find("input[name='problem[questions_attributes][0][japaneseexample]']").set("これは、本です")
+      find("input[name='problem[questions_attributes][0][englishexample]']").set("This is a book")
       click_button "更新"
       expect(@choice2.reload.choice).to eq false
     end

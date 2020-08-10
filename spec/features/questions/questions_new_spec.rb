@@ -25,26 +25,28 @@ RSpec.feature "QuestionsNews", type: :feature do
     feature "valid new question" do
       before do
         find("input[name='problem[questions_attributes][1][content]']").set("ああああ")
-        find("input[name='problem[questions_attributes][1][answer]']").set("あああq")
-        find("textarea[name='problem[questions_attributes][1][description]']").set("あああ")
+        find("input[name='problem[questions_attributes][1][answer]']").set("ああああ")
+        find("input[name='problem[questions_attributes][1][japaneseexample]']").set("これは、本です")
+        find("input[name='problem[questions_attributes][1][englishexample]']").set("This is a book")
       end
 
       scenario "add questions count" do
         expect { click_button '登録' }.to change { Question.all.size }.by(1)
       end
-  #
+
       scenario "show flash message" do
         click_button "登録"
         visit problem_questions_path(@problem)
       end
 
     end
-  #
+  
     feature "invalid signup information" do
       before do
         find("input[name='problem[questions_attributes][1][content]']").set("")
         find("input[name='problem[questions_attributes][1][answer]']").set("")
-        find("textarea[name='problem[questions_attributes][1][description]']").set("")
+        find("input[name='problem[questions_attributes][1][japaneseexample]']").set("")
+        find("input[name='problem[questions_attributes][1][englishexample]']").set("")
       end
 
       scenario "no difference users count" do
@@ -55,7 +57,8 @@ RSpec.feature "QuestionsNews", type: :feature do
         click_button "登録"
         expect(page).to have_content "問題を入力してください"
         expect(page).to have_content "解答を入力してください"
-        expect(page).to have_content "解説を入力してください"
+        expect(page).to have_content "例文を入力してください"
+        expect(page).to have_content "和訳を入力してください"
       end
     end
   end
@@ -79,7 +82,8 @@ RSpec.feature "QuestionsNews", type: :feature do
         find("input[name='problem[questions_attributes][2][content]']").set("ああああ")
         find("input[name='problem[questions_attributes][2][question_choices_attributes][0][choice]']").set(true)
         find("input[name='problem[questions_attributes][2][question_choices_attributes][0][content]']").set("ああああ")
-        find("textarea[name='problem[questions_attributes][2][description]']").set("あああ")
+        find("input[name='problem[questions_attributes][2][japaneseexample]']").set("これは、本です")
+        find("input[name='problem[questions_attributes][2][englishexample]']").set("This is a book")
       end
 
       scenario "add questions count" do
@@ -96,7 +100,8 @@ RSpec.feature "QuestionsNews", type: :feature do
         find("input[name='problem[questions_attributes][2][content]']").set("")
         find("input[name='problem[questions_attributes][2][question_choices_attributes][0][choice]']").set(true)
         find("input[name='problem[questions_attributes][2][question_choices_attributes][0][content]']").set("")
-        find("textarea[name='problem[questions_attributes][2][description]']").set("")
+        find("input[name='problem[questions_attributes][2][japaneseexample]']").set("")
+        find("input[name='problem[questions_attributes][2][englishexample]']").set("")
       end
 
       scenario "no difference questions and questionchoice count" do
@@ -108,7 +113,8 @@ RSpec.feature "QuestionsNews", type: :feature do
         click_button "登録"
         expect(page).to have_content "問題を入力してください"
         expect(page).to have_content "選択欄を入力してください"
-        expect(page).to have_content "解説を入力してください"
+        expect(page).to have_content "例文を入力してください"
+        expect(page).to have_content "和訳を入力してください"
       end
     end
   end
