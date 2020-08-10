@@ -2,6 +2,8 @@
 <% provide(:button_text, '回答する') %>
 <div class="mt-3">
   <h1 class="text-center">質問</h1>
+  <% current_question = @question.id - @problem.questions.first.id + 1 %>
+  <div class="current_question"><%= current_question %>/<%= @problem.questions.count %>問</div>
   <div class="question_title">下記の日本語を英語に訳しなさい。</div>
   <div class="question_content mt-3">Q.<%= @question.content %>
   <div class="mt-3 row">

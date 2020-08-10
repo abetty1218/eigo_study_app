@@ -24,13 +24,20 @@ User.create!(name: "管理者",
              )
 end
 
-10.times do |n|
-  title  = "test"
-  description = "てすと"
-  Notice.create!(title: title,
-               description: description)
-end
-
+# 10.times do |n|
+#   title  = "test"
+#   description = "てすと"
+#   Notice.create!(title: title,
+#                description: description)
+# end
+Notice.create!(title:"新しい問題（記述式）を公開しました。",created_at:"2020-06-25")
+Notice.create!(title:"新しい問題（記述式）を公開しました。",created_at:"2020-07-01")
+Notice.create!(title:"新しい問題（記述式）を公開しました。",created_at:"2020-07-08")
+Notice.create!(title:"サイトのメインテナンスについて", description: "サイトのメインテナンスのため、7月3日0:00~6:00の間は、サイトを利用できません、ご不便をおかけしますが、よろしくお願いします。",created_at:"2020-07-09")
+Notice.create!(title:"新しい問題（選択式）を公開しました。",created_at:"2020-07-15")
+Notice.create!(title:"新しい問題（記述式）を公開しました。",created_at:"2020-07-21")
+Notice.create!(title:"新しい問題（選択式）を公開しました。",created_at:"2020-07-28")
+Notice.create!(title:"新しい問題（記述式）を公開しました。",created_at:"2020-08-04")
 
 Problem.create!(question_style:2,number:1)
 Problem.create!(question_style:1,number:2)
