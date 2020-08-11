@@ -15,6 +15,7 @@
 <input name="number_json" type="hidden" value=<%= @number %> class='number_json'/>
 <input name="update_json" type="hidden" value=<%= @update_number %> class='update_json'/>
 <script>
+  $('.question_add').find(".add_question_btn").remove();
   let update = <%= @update %>
   if(update == false){
     let number_json = $('.number_json').val();
@@ -31,8 +32,6 @@
     $(this).parents(".fields").find('input[type="radio"]').prop('checked', false);
     $(this).prop('checked', true);
   });
-  $('.question_add').find(".add_question_btn").remove();
-  // let choice_count = {};
   $('.submit-btn').on("click",function(e){
     let choice_count = {};
     $(".container").children(".mt-3").children(".edit_problem").children(".fields:visible").each(function(index, element){
