@@ -169,7 +169,7 @@ ja:
       present: は入力しないでください
       required: を入力してください
       taken: はすでに存在します
-      too_long: は%{count}桁以内で入力してください
+      too_long: は%{count}文字以内で入力してください
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
     template:

@@ -11,7 +11,7 @@
       <%= f.text_field :answer,value: @question.answer.slice(0,1), class: 'form-control answer-font'%>
     <% end %>
   </div>
-  <% if QuestionAnswer.where(question_id: @question.id).where(try: @try).present? %>
+  <% if current_user.question_answers.where(question_id: @question.id).where(try: @try).present? %>
     <%= f.submit yield(:button_text), class: "btn btn-primary mt-2",:disabled=>true %>
   <% else %>
     <%= f.submit yield(:button_text), class: "btn btn-primary mt-2" %>

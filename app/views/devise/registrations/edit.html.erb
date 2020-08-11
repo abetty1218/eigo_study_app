@@ -3,7 +3,7 @@
 <div class="mt-3">
   <h1 class="text-center">アカウント編集</h1>
 
-  <%= form_for(resource, as: resource_name, url: user_path(resource.id,resource_name), html: { method: :put }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: user_path(resource.id, resource_name), html: { method: :put }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="form-group">

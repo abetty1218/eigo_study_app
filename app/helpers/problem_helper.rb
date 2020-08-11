@@ -18,18 +18,26 @@ module ProblemHelper
     end
   end
 
+  def get_admin_name(problem)
+    if problem.question_style == 1
+      "質問一覧（選択式）"
+    else
+      "質問一覧（記述式）"
+    end
+  end
+
   def get_name(problem,first_answer)
     if problem.question_style == 1
       if first_answer.count == problem.questions.count
         "再チャレンジ（選択式）!!"
       else
-        "問題（選択式）"
+        "質問（選択式）"
       end
     else
       if first_answer.count == problem.questions.count
         "再チャレンジ（記述式）!!"
       else
-        "問題（記述式）"
+        "質問（記述式）"
       end
     end
   end

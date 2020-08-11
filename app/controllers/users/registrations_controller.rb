@@ -29,16 +29,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
+  # def edit
+  #  super
+  # end
   def edit
     self.resource = resource_class.to_adapter.get!(params[:id])
     # @user = User.find(params[:id])
   end
 
   # PUT /resource
+  # def update
+  #   super
+  # end
   def update
     self.resource = resource_class.to_adapter.get!(params[:id])
     if update_resource(resource, account_update_params)
       set_flash_message :notice, :updated
+      # render plain: current_user.id.inspect
+      if current_user.id == params[:id].to_i
+        sign_in resource_name, resource, bypass: true
+      end
       redirect_to edit_user_url(resource)
     else
       clean_up_passwords(resource)

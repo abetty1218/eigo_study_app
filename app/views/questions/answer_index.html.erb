@@ -23,7 +23,7 @@
         <td class="text-center">
           <% if current_user.question_answers.where(question_id: question.id).present? %>
             <% if @problem.question_style == 2 %>
-              <% current_user.question_answers.where(question_id: question.id).find_by(try: try).answer %>
+              <%= current_user.question_answers.where(question_id: question.id).find_by(try: try).answer %>
             <% else %>
               <% number = current_user.question_answers.where(question_id: question.id).find_by(try: try).answer.to_i %>
               <%= question.question_choices[number - 1].content %>
@@ -50,7 +50,6 @@
             <% end %>
           <% end %>
         </td>
-
         <td class="text-center"><%= link_to "詳細", problem_question_path(@problem,question), class: 'btn btn-primary' %></td>
       </tr>
     <% end %>

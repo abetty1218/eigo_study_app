@@ -10,12 +10,12 @@
       <tr>
         <td class="text-center"><%= problem.number %></td>
         <td class="text-center"><%= problem.released_on %></td>
-        <td class="text-center"><%= link_to "質問一覧",problem_questions_path(problem) %></td>
+        <td class="text-center"><%= link_to get_admin_name(problem),problem_questions_path(problem) %></td>
         <td class="text-center">
           <% if problem.released == true %>
-          　<%= link_to "非公開", released_problem_path(problem), method: :patch, class: 'btn btn-success',data: { confirm: "問題を非公開にしてもいいですか？" } %>
+          　<%= link_to "公開済み", released_problem_path(problem), method: :patch, class: 'btn btn-success',data: { confirm: "問題を非公開にしてもいいですか？" } %>
           <% elsif %>
-            <%= link_to "公開", released_problem_path(problem), method: :patch, class: 'btn btn-primary',data: { confirm: "問題を公開してもいいですか？" }%>
+            <%= link_to "未公開", released_problem_path(problem), method: :patch, class: 'btn btn-primary',data: { confirm: "問題を公開してもいいですか？" }%>
           <% end %>
         </td>
         <td class="text-center">

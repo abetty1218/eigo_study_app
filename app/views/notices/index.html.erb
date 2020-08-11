@@ -15,7 +15,7 @@
         <% if admin_logged_in? %>
           <div class="mt-3">
             <%= link_to "編集", edit_notice_path(notice), class: 'btn btn-primary' %>
-            <%= link_to "削除", notice_path(notice) , method: :delete, class: 'btn btn-danger',data: { confirm: "#{notice.title}さんを消去してもいいですか？" } %>
+            <%= link_to "削除", notice_path(notice) , method: :delete, class: 'btn btn-danger',data: { confirm: "お知らせを削除してもよろしいでしょうか？" } %>
           </div>
         <% end %>
       </li>

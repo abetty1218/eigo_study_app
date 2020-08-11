@@ -13,6 +13,12 @@
   <% end %>
 </div>
 <script>
+  let update = <%= @update %>
+  let number = <%= @number %>
+  console.log($('input[type="radio"]:checked').attr("name"));
+  if(update == false){
+    $(`input[name="question[question_choices_attributes][${number}][choice]"]`).prop('checked', false);
+  }
   $(document).on('click','input[type="radio"]',function(){
     $('input[type="radio"]').prop('checked', false);
     $(this).prop('checked', true);

@@ -12,20 +12,31 @@
     <% end %>
   <% end %>
 </div>
-
+<input name="number_json" type="hidden" value=<%= @number %> class='number_json'/>
+<input name="update_json" type="hidden" value=<%= @update_number %> class='update_json'/>
 <script>
+  let update = <%= @update %>
+  if(update == false){
+    let number_json = $('.number_json').val();
+    let number = JSON.parse(number_json);
+    let update_json = $('.update_json').val();
+    let update = JSON.parse(update_json);
+    $.each(number, function(index, value) {
+      if(value != update[index]){
+        $(`input[name="problem[questions_attributes][${index}][question_choices_attributes][${value}][choice]"]`).prop('checked', false);
+      }
+    });
+  }
   $(document).on('click','input[type="radio"]',function(){
     $(this).parents(".fields").find('input[type="radio"]').prop('checked', false);
     $(this).prop('checked', true);
   });
   $('.question_add').find(".add_question_btn").remove();
-
   // let choice_count = {};
   $('.submit-btn').on("click",function(e){
     let choice_count = {};
     $(".container").children(".mt-3").children(".edit_problem").children(".fields:visible").each(function(index, element){
       each_count = $(element).find('.fields:visible').find('.choice:checked').length;
-      console.log(each_count);
       if(each_count == 0){
         choice_count[index+1] = each_count;
       }

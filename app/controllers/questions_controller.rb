@@ -28,17 +28,24 @@ class QuestionsController < ApplicationController
   def edit
     @question = Question.find(params[:id])
     @problem = Problem.find(params[:problem_id])
-    @question_choices = @question.question_choices
+    @update = true
   end
 
   def edit_all
     @problem = Problem.find(params[:problem_id])
+    @update = true
   end
 
   def update
+    @update = true
     @question = Question.find(params[:id])
     @problem = Problem.find(params[:problem_id])
     choice = @question.question_choices.find_by(choice: true);
+    @question.question_choices.each_with_index do |choice, index|
+      if choice.choice == true
+        @number = index
+      end
+    end
     if @question.update_attributes(question_update_params)
       if question_update_params["question_choices_attributes"].present?
         update_choice = @question.question_choices.where.not(id: choice.id).where(choice: true).first
@@ -50,7 +57,7 @@ class QuestionsController < ApplicationController
       flash[:success] = "質問を編集しました。"
       redirect_to problem_questions_url
     else
-      @question_choices = @question.question_choices
+      @update = false
       render "edit"
     end
   end
@@ -58,6 +65,26 @@ class QuestionsController < ApplicationController
   def update_all
     @problem = Problem.find(params[:problem_id])
     choice = QuestionChoice.where(question_id: 1).where(choice: true);
+    if @problem.question_style == 1
+      @number = []
+      @problem.questions.each do |question|
+        question.question_choices.each_with_index do |choice, index|
+          if choice.choice == true
+            @number.push(index)
+          end
+        end
+      end
+      @update_number = []
+      problem_params["questions_attributes"].each do |key,question|
+        question["question_choices_attributes"].each do |index,choice|
+          if choice["choice"] == "true"
+            @update_number.push(index)
+          end
+        end
+      end
+      @number = @number.to_json.html_safe
+      @update_number = @update_number.to_json.html_safe
+    end
     if @problem.update_attributes(problem_params)
       problem_params["questions_attributes"].keys.each do |id|
         if problem_params["questions_attributes"][id]["question_choices_attributes"].present? && problem_params["questions_attributes"][id]["_destroy"] == "false"
@@ -76,6 +103,7 @@ class QuestionsController < ApplicationController
       flash[:success] = "質問を編集しました。"
       redirect_to problem_questions_url
     else
+      @update = false
       render 'edit_all'
     end
   end

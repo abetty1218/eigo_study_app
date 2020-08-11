@@ -28,7 +28,6 @@ class QuestionsAnswersController < ApplicationController
         @answer_count = current_user.question_answers.where(problem_id: @problem.id).where(try: @try).count
         @form_answer = answer_params[:answer]
         render "questions/answer"
-        # redirect_to answer_problem_question_url(answer_params[:problem_id],answer_params[:question_id],try: answer_params[:try])
       else
         flash[:danger] = "回答を入力してください"
         redirect_to answer_problem_question_url(answer_params[:problem_id],answer_params[:question_id],try: answer_params[:try])
