@@ -29,6 +29,8 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @problem = Problem.find(params[:problem_id])
     @update = true
+    @number = 0
+    @update_number = 0
   end
 
   def edit_all
@@ -41,9 +43,16 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @problem = Problem.find(params[:problem_id])
     choice = @question.question_choices.find_by(choice: true);
-    @question.question_choices.each_with_index do |choice, index|
-      if choice.choice == true
-        @number = index
+    if @problem.question_style == 1
+      @question.question_choices.each_with_index do |choice, index|
+        if choice.choice == true
+          @number = index
+        end
+      end
+      question_update_params["question_choices_attributes"].each do |index,choice|
+        if choice["choice"] == "true"
+          @update_number = index
+        end
       end
     end
     if @question.update_attributes(question_update_params)

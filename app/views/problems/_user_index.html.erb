@@ -1,7 +1,6 @@
 <table class="table-bordered table-striped col-md-12">
   <tr>
-    <th class="text-center table-height">No</th>
-    <th class="text-center">公開日</th>
+    <th class="text-center table-height">公開日</th>
     <th class="text-center">問題</th>
     <th class="text-center w-25">正答率</th>
     <th class="text-center">質問回答一覧</th>
@@ -17,16 +16,15 @@
       <%# 現在挑戦している問題の回答結果　%>
       <% current_answer = problem_answer.where(try: last_try) %>
       <%# 現在挑戦している質問の番号　%>
-      <% if current_answer.count == problem.questions.count %>
-        <% question_count = problem.questions.first.id %>
+      <% if current_answer.count == problem.questions.count || problem_answer.blank? %>
+        <% question = problem.questions.first %>
       <% else %>
-        <% question_count = problem.questions.first.id + current_answer.count %>
+        <% question = problem.questions.next(current_answer.last.question_id) %>
       <% end %>
       <tr>
-        <td class="text-center table-height"><%= problem.number %></td>
-        <td class="text-center"><%= problem.released_on %></td>
+        <td class="text-center table-height"><%= problem.released_on %></td>
         <td class="text-center">
-          <%= link_to get_name(problem,first_answer), answer_problem_question_path(problem,Question.find(question_count),try: get_try(problem_answer,problem,current_answer,first_answer)) %>
+          <%= link_to get_name(problem,first_answer), answer_problem_question_path(problem,question,try: get_try(problem_answer,problem,current_answer,first_answer,last_try)) %>
         </td>
         <td class="text-center">
           <% correct_count = problem_answer.where(try: get_correct_count_try(last_try,current_answer,problem)).where(correct: true).count %>

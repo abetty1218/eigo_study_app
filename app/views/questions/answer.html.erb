@@ -2,8 +2,7 @@
 <% provide(:button_text, '回答する') %>
 <div class="mt-3">
   <h1 class="text-center">質問</h1>
-  <% current_question = @question.id - @problem.questions.first.id + 1 %>
-  <div class="current_question"><%= current_question %>/<%= @problem.questions.count %>問</div>
+  <div class="current_question"><%= current_question(@problem,@question) %>/<%= @problem.questions.count %>問</div>
   <div class="question_title">下記の日本語を英語に訳しなさい。</div>
   <div class="question_content mt-3">Q.<%= @question.content %>
   <div class="mt-3 row">
@@ -35,7 +34,7 @@
     <% if @answer_count == @question_count %>
       <%= link_to "回答結果", complete_problem_path(@problem,try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
     <% elsif @answer %>
-      <%= link_to "次の質問へ", answer_problem_question_path(@problem,@question.id.to_i+1,try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
+      <%= link_to "次の質問へ", answer_problem_question_path(@problem,Question.next(@question.id),try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
     <% end %>
   </div>
 </div>

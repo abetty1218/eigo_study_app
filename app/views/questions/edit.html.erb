@@ -16,7 +16,10 @@
   let update = <%= @update %>
   if(update == false){
     let number = <%= @number %>
-    $(`input[name="question[question_choices_attributes][${number}][choice]"]`).prop('checked', false);
+    let update_number = <%= @update_number %>
+    if(number != update_number){
+      $(`input[name="question[question_choices_attributes][${number}][choice]"]`).prop('checked', false);
+    }
   }
 
   $(document).on('click','input[type="radio"]',function(){

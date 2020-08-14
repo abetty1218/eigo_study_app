@@ -5,13 +5,12 @@ module ProblemHelper
     correct_rate = 100 * correct_count / question_count
   end
 
-  def get_try(problem_answer,problem,current_answer,first_answer)
+  def get_try(problem_answer,problem,current_answer,first_answer,last_try)
     if first_answer.count == problem.questions.count
-      answer = problem_answer.where(question_id: problem.questions.first.id)
       if current_answer.count == problem.questions.count
-        answer.last.try + 1
+        last_try + 1
       else
-        answer.last.try
+        last_try
       end
     else
       0

@@ -15,4 +15,12 @@ class Question < ApplicationRecord
      end
    end
 
+   def self.next(id)
+     Question.where("id > ?",id).order("id ASC").first
+   end
+
+   def self.previous(id)
+     Question.here("id < ?",id).order("id DESC").first
+   end
+
 end
