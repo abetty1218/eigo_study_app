@@ -34,6 +34,9 @@ class ProblemsController < ApplicationController
     if @problem.released == true
       @problem.released = false
       @problem.released_on = nil
+      if @problem.question_answers
+        @problem.question_answers.delete_all
+      end
     else
       @problem.released = true
       @problem.released_on = Date.current
@@ -51,7 +54,7 @@ class ProblemsController < ApplicationController
   def complete
     @try = params[:try].to_i
     @problem = Problem.find(params[:id])
-    @correct_count = current_user.question_answers.where(problem_id: params[:id]).where(correct: true).where(try: @try).count
+    @correct_count = current_user.question_answers.get_problem_answer(params[:id],@try).where(correct: true).count
     @question_count = @problem.questions.count
   end
 

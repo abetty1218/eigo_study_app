@@ -21,7 +21,7 @@
         <% if @problem.question_style == 2 %>
           <div class="ml-5 mt-1 correct-notice">正解は「<%= @question.answer %>」です。</div>
         <% else %>
-          <div class="ml-5 mt-1 correct-notice">正解は「<%= @question.question_choices[@question.answer.to_i - 1].content %>」です。</div>
+          <div class="ml-5 mt-1 correct-notice">正解は「<%= get_correct_content(@question) %>」です。</div>
         <% end %>
       <% end %>
     </div>
@@ -34,7 +34,7 @@
     <% if @answer_count == @question_count %>
       <%= link_to "回答結果", complete_problem_path(@problem,try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
     <% elsif @answer %>
-      <%= link_to "次の質問へ", answer_problem_question_path(@problem,Question.next(@question.id),try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
+      <%= link_to "次の質問へ", answer_problem_question_path(@problem,@problem.questions.next(@question.id),try:@try), class: "btn btn-success col-md-4 offset-4 mt-5" %>
     <% end %>
   </div>
 </div>

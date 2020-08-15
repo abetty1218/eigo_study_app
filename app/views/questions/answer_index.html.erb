@@ -34,11 +34,7 @@
           <% if @problem.question_style == 2 %>
             <%= question.answer %>
           <% else %>
-            <% question.question_choices.each_with_index do |choice, id| %>
-              <% if choice.choice == true %>
-                <%= choice.content %>
-              <% end %>
-            <% end %>
+            <%= get_correct_content(question) %>
           <% end %>
         </td>
         <td class="text-center">

@@ -11,7 +11,7 @@
       <% if @problem.question_style == 2 %>
         <%= @question.answer %>
       <% else %>
-        <%= @question.question_choices[@question.answer.to_i - 1].content %>
+        <%= get_correct_content(@question) %>
       <% end %>
     </div>
   </div>

@@ -6,7 +6,7 @@ class QuestionsAnswersController < ApplicationController
     @question_answer = QuestionAnswer.new(answer_params)
     @problem = Problem.find(answer_params[:problem_id])
     @question = Question.find(answer_params[:question_id])
-    @answer  = current_user.question_answers.where(problem_id: @problem.id).where(try: @try).where(question_id: @question.id).first
+    @answer  = current_user.question_answers.get_problem_answer(@problem.id,@try).where("question_id = ?", @question.id).first
     if @problem.question_style == 2
       answer = @question.answer
     else
@@ -24,8 +24,8 @@ class QuestionsAnswersController < ApplicationController
     if @answer.nil?
       if @question_answer.save
         @question_count = @problem.questions.count
-        @answer  = current_user.question_answers.where(problem_id: @problem.id).where(try: @try).where(question_id: @question.id).first
-        @answer_count = current_user.question_answers.where(problem_id: @problem.id).where(try: @try).count
+        @answer  = current_user.question_answers.get_problem_answer(@problem.id,@try).where("question_id = ?", @question.id).first
+        @answer_count = current_user.question_answers.get_problem_answer(@problem.id,@try).count
         @form_answer = answer_params[:answer]
         render "questions/answer"
       else
