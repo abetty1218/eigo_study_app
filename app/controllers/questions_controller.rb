@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :logged_in_admin, only: [:index,:create,:destroy,:new,:edit,:update,:edit_all,:update_all]
-  before_action :logged_in_user, only: [:answer_index,:answer,:show]
+  before_action :logged_in_user, only: [:answer_index,:answer]
+  before_action :logged_in, only: [:show]
 
   def index
     @problem = Problem.find(params[:problem_id])

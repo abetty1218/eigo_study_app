@@ -24,7 +24,7 @@ class ProblemsController < ApplicationController
   end
 
   def index
-    @problems = Problem.all
+    @problems = Problem.all.order(number: "ASC")
     @problem = Problem.new
     @count = @problems.count
   end

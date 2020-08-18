@@ -22,6 +22,7 @@
     let number = JSON.parse(number_json);
     let update_json = $('.update_json').val();
     let update = JSON.parse(update_json);
+    $('input[name$="[_destroy]"]').val("false");
     $.each(number, function(index, value) {
       if(value != update[index]){
         $(`input[name="problem[questions_attributes][${index}][question_choices_attributes][${value}][choice]"]`).prop('checked', false);
