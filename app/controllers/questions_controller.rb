@@ -37,10 +37,14 @@ class QuestionsController < ApplicationController
   def edit_all
     @problem = Problem.find(params[:problem_id])
     @update = true
+    @number = 0
+    @update_number = 0
   end
 
   def update
     @update = true
+    @number = 0
+    @update_number = 0
     @question = Question.find(params[:id])
     @problem = Problem.find(params[:problem_id])
     choice = @question.question_choices.find_by(choice: true);
@@ -74,6 +78,8 @@ class QuestionsController < ApplicationController
 
   def update_all
     @problem = Problem.find(params[:problem_id])
+    @number = 0
+    @update_number = 0
     if @problem.question_style == 1
       @number = []
       @problem.questions.each do |question|
