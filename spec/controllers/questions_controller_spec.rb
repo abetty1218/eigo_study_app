@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 describe QuestionsController do
 #
@@ -47,7 +48,7 @@ describe QuestionsController do
         expect(response.status).to eq 302
       end
       it ':editテンプレートを表示すること' do
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 

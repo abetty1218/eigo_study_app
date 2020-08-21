@@ -13,26 +13,21 @@
   <% end %>
 </div>
 <script>
-  let update = <%= @update %>
-  if(update == false){
-    let number = <%= @number %>
-    let update_number = <%= @update_number %>
-    if(number != update_number){
-      $(`input[name="question[question_choices_attributes][${number}][choice]"]`).prop('checked', false);
+  
+  $(function(){
+    let update = <%= @update %>
+    if(update == false){
+      let number = <%= @number %>
+      let update_number = <%= @update_number %>
+      if(number != update_number){
+        $(`input[name="question[question_choices_attributes][${number}][choice]"]`).prop('checked', false);
+      }
     }
-  }
 
-  $(document).on('click','input[type="radio"]',function(){
-    $('input[type="radio"]').prop('checked', false);
-    $(this).prop('checked', true);
-  });
+    $(document).on('click','input[type="radio"]',function(){
+      $('input[type="radio"]').prop('checked', false);
+      $(this).prop('checked', true);
+    });
 
-  $('.submit-btn').on("click",function(e){
-    let count;
-    count = $('.fields:visible').find('.choice:checked').length;
-    if(count == 0){
-      alert("解答となる選択肢にチェックがはいっていません。");
-      return false;
-    }
   });
 </script>

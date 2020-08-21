@@ -16,7 +16,7 @@ FactoryBot.define do
   factory :problem2, class: Problem do
     question_style {1}
     released_on {"2019-01-01"}
-    released {true}
+    released {false}
     number {2}
   end
 end

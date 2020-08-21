@@ -44,4 +44,4 @@
 <div class="question_add">
   <%= f.link_to_add "質問追加", :questions, class:"add_question_btn d-block mt-3" %>
 </div>
-<%= f.submit yield(:button_text), class: "btn btn-primary mt-1 submit-btn" %>
+<%= f.submit yield(:button_text), class: "btn btn-primary mt-1 submit-btn", :onclick =>"return questionerror();" %>

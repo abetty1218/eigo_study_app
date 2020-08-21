@@ -15,7 +15,7 @@ end
 it "is invalid a content larger than 20 letters" do
   answer = build(:question_answer,answer: "aaaaaaaaaaaaaaaaaaaaa")
   answer.valid?
-  expect(answer.errors[:answer]).to include("は20桁以内で入力してください")
+  expect(answer.errors[:answer]).to include("は20文字以内で入力してください")
 end
 
 end

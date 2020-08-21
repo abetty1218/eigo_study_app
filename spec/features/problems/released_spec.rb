@@ -20,7 +20,7 @@ RSpec.feature "Released", type: :feature do
       expect(current_path).to eq problems_path
       expect(page).to have_title "問題一覧 | 英単語学習アプリ"
       expect(page).to have_css("h1", text: "問題一覧")
-      click_link "公開"
+      click_link "未公開"
       visit problems_path
       expect(@problem.reload.released).to eq true
       expect(@problem.reload.released_on).to eq Date.current
@@ -37,7 +37,7 @@ RSpec.feature "Released", type: :feature do
       expect(current_path).to eq problems_path
       expect(page).to have_title "問題一覧 | 英単語学習アプリ"
       expect(page).to have_css("h1", text: "問題一覧")
-      click_link "非公開"
+      click_link "公開済み"
       visit problems_path
       expect(@problem.reload.released).to eq false
       expect(@problem.reload.released_on).to eq nil

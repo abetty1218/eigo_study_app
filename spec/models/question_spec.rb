@@ -15,7 +15,7 @@ RSpec.describe Question, type: :model do
   it "is invalid a content larger than 20 letters" do
     question = build(:question,content: "aaaaaaaaaaaaaaaaaaaaa")
     question.valid?
-    expect(question.errors[:content]).to include("は20桁以内で入力してください")
+    expect(question.errors[:content]).to include("は20文字以内で入力してください")
   end
 
   it "is invalid without a answer" do
@@ -33,7 +33,7 @@ RSpec.describe Question, type: :model do
   it "is invalid a japaneseexample larger than 255 letters" do
     question = build(:question,japaneseexample: "a"*256)
     question.valid?
-    expect(question.errors[:japaneseexample]).to include("は255桁以内で入力してください")
+    expect(question.errors[:japaneseexample]).to include("は255文字以内で入力してください")
   end
 
   it "is invalid without a englishexample" do
@@ -45,6 +45,6 @@ RSpec.describe Question, type: :model do
   it "is invalid a englishexample larger than 255 letters" do
     question = build(:question,englishexample: "a"*256)
     question.valid?
-    expect(question.errors[:englishexample]).to include("は255桁以内で入力してください")
+    expect(question.errors[:englishexample]).to include("は255文字以内で入力してください")
   end
 end

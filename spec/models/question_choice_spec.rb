@@ -14,7 +14,7 @@ RSpec.describe QuestionChoice, type: :model do
   it "is invalid a content larger than 20 letters" do
     choice = build(:question_choice,content: "aaaaaaaaaaaaaaaaaaaaa")
     choice.valid?
-    expect(choice.errors[:content]).to include("は20桁以内で入力してください")
+    expect(choice.errors[:content]).to include("は20文字以内で入力してください")
   end
 
 end
