@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
 
   def index
     @problem = Problem.find(params[:problem_id])
-    @questions = @problem.questions
+    @questions = @problem.questions.order(id: :asc)
   end
 
   def new
@@ -105,7 +105,7 @@ class QuestionsController < ApplicationController
         if problem_params["questions_attributes"][id]["question_choices_attributes"].present? && problem_params["questions_attributes"][id]["_destroy"] == "false"
           question_id = problem_params["questions_attributes"][id]["id"]
           choice = QuestionChoice.where("question_id = ?",question_id).where(choice: true);
-          first_choice = choice.order(updated_at: :asc).first
+          first_choice = choice.reorder(updated_at: :asc).first
           if !choice.where.not("id = ?", first_choice.id).nil?
             update_choice = choice.where.not("id = ?", first_choice.id).first
           end
@@ -140,7 +140,7 @@ class QuestionsController < ApplicationController
 
   def answer_index
     @problem = Problem.find(params[:problem_id])
-    @questions = @problem.questions
+    @questions = @problem.questions.order(id: :asc)
   end
 
   def destroy
