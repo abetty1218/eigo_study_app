@@ -13,13 +13,24 @@ class ProblemsController < ApplicationController
 
   def create
     @problem = Problem.new(problem_params)
+    destroy_count = 0
+    problem_params["questions_attributes"].each do |key, question|
+      if question["_destroy"] == "false"
+        destroy_count += 1
+      end
+    end
     @question_style = problem_params[:question_style]
     @count = Problem.all.count
-    if @problem.save
-      flash[:success] = "問題を作成しました。"
-      redirect_to problems_url
+    if destroy_count == 0
+      flash[:danger] = "質問が一つも作成されていません。"
+      redirect_to new_problem_url(question_style:problem_params["question_style"])
     else
-      render 'new'
+      if @problem.save
+        flash[:success] = "問題を作成しました。"
+        redirect_to problems_url
+      else
+        render 'new'
+      end
     end
   end
 

@@ -16,15 +16,26 @@ class QuestionsController < ApplicationController
   end
 
   def create
-     @problem = Problem.find(params[:problem_id])
-     @count = @problem.questions.count
-     if @problem.update_attributes(problem_params)
-       flash[:success] = "質問を作成しました。"
-       redirect_to problem_questions_url
-     else
-       render 'new'
-     end
-   end
+    destroy_count = 0
+    problem_params["questions_attributes"].each do |key, question|
+      if question["_destroy"] == "false"
+        destroy_count += 1
+      end
+    end
+    @problem = Problem.find(params[:problem_id])
+    @count = @problem.questions.count
+    if destroy_count == 0
+      flash[:danger] = "質問が一つも作成されていません。"
+      redirect_to new_problem_question_url(@problem)
+    else
+      if @problem.update_attributes(problem_params)
+        flash[:success] = "質問を作成しました。"
+        redirect_to problem_questions_url
+      else
+        render 'new'
+      end
+    end
+  end
 
   def edit
     @question = Question.find(params[:id])
