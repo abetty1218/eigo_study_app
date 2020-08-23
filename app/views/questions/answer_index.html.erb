@@ -39,9 +39,9 @@
         </td>
         <td class="text-center">
           <% if current_user.question_answers.where(question_id: question.id).present? %>
-          　<% if current_user.question_answers.where(question_id: question.id).find_by(try: try).correct == true %>
+            <% if current_user.question_answers.where(question_id: question.id).find_by(try: try).correct == true %>
               正解
-          　<% elsif current_user.question_answers.where(question_id: question.id).find_by(try: try).correct == false %>
+            <% elsif current_user.question_answers.where(question_id: question.id).find_by(try: try).correct == false %>
               不正解
             <% end %>
           <% end %>
