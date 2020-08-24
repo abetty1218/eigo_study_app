@@ -166,6 +166,8 @@ describe ProblemsController do
         log_in_as(@admin)
         @problem = create(:problem)
         @problem1 = create(:problem1)
+        @question = create(:question,problem_id: @problem.id)
+        @question1 = create(:question,problem_id: @problem1.id)
       end
 
       it 'updates updated problem' do

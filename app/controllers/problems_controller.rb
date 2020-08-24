@@ -52,13 +52,18 @@ class ProblemsController < ApplicationController
       @problem.released = true
       @problem.released_on = Date.current
     end
-    if @problem.save
-      flash[:success] = "公開状況を変更しました。"
+    if @problem.questions.count == 0
+      flash[:danger] = "質問が一つも作成されていないため、公開できません。"
       redirect_to problems_url
     else
-      @problems = Problem.all
-      @count = @problems.count
-      render 'index'
+      if @problem.save
+        flash[:success] = "公開状況を変更しました。"
+        redirect_to problems_url
+      else
+        @problems = Problem.all.order(number: "ASC")
+        @count = @problems.count
+        render 'index'
+      end
     end
   end
 
