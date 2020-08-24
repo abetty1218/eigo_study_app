@@ -83,12 +83,14 @@ describe ProblemsController do
       end
       it 'saves new problem 記述式' do
         @problem["questions_attributes"] = {"0" => @question}
+        @problem["questions_attributes"]["0"]["_destroy"] = "false"
         expect do
           post :create, params: { problem: @problem}
         end.to change(Problem, :count).by(1).and change(Question, :count).by(1)
       end
       it 'saves new problem　選択式' do
         @problem2["questions_attributes"] = {"0" => @question}
+        @problem2["questions_attributes"]["0"]["_destroy"] = "false"
         @problem2["questions_attributes"]["0"]["question_choices_attributes"] = {"0" => @choice}
         expect do
           post :create, params: { problem: @problem2}
@@ -96,6 +98,8 @@ describe ProblemsController do
       end
 
       it 'redirects the :create template' do
+        @problem["questions_attributes"] = {"0" => @question}
+        @problem["questions_attributes"]["0"]["_destroy"] = "false"
         post :create, params: { problem: @problem}, session: {}
         expect(response).to redirect_to(problems_path)
       end
