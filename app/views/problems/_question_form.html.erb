@@ -11,7 +11,7 @@
   <div class="form-group">
     <%= ff.label :answer %>
     <%= ff.text_field :answer, class: 'form-control' %>
-    <% if ff.object.errors.include?(:content) %>
+    <% if ff.object.errors.include?(:answer) %>
       <p style="color: red;"><%= ff.object.errors.full_messages_for(:answer).first %>
     <% end %>
   </div>
